@@ -2,32 +2,30 @@ import axios from 'axios';
 import readline from 'node:readline';
 import colors from 'colors';
 import clipboardy from 'clipboardy';
+import { configReader,
+         errorHandler, 
+         infoHandler } from './util.js';
 
-const pwyllUrl = 'http://127.0.0.1:46520';
-
-async function pwyllCall(userID, query) {
-  try {
-    const response = await axios.get(`${pwyllUrl}/command/find?q=${query}&userId=${userID}`);
-    let snippets = [];
-    if (!response.data.length) {
-      return snippets;
-    } else {
-      for (var i = 0; i < response.data.length; i++) {
-        const snippet = {
-          snippet: response.data[i].command,
-          description: response.data[i].description,
-      }
-        snippets.push(snippet);
+async function searchSnippetPwyllCall(pwyllUrl, userID, query) {
+  const response = 
+    await axios.get(`${pwyllUrl}/command/find?q=${query}&userId=${userID}`);
+  let snippets = [];
+  if (!response.data.length) {
+    return snippets;
+  } else {
+    for (var i = 0; i < response.data.length; i++) {
+      const snippet = {
+        snippet: response.data[i].command,
+        description: response.data[i].description,
     }
-      return snippets;
-    }
-  } catch (error) {
-    console.log(error);
+      snippets.push(snippet);
+  }
+    return snippets;
   }
 }
 
-function callAndPrint(rl, query) {
-  pwyllCall('65b79e94feccf1b54511d1a2', query)
+function callAndPrint(rl, query, config) {
+  searchSnippetPwyllCall(config.pwyllUrl, config.userID, query)
   .then((snippets) => {
     console.clear();
     rl.write(null, { ctrl: true, name: 'u' }); 
@@ -44,8 +42,8 @@ function callAndPrint(rl, query) {
   });
 }
 
-(async () => {
-
+export async function search() {
+  const config = configReader();
   let queryBuffer = [];
 
 	const rl = readline.createInterface({ 
@@ -62,18 +60,18 @@ function callAndPrint(rl, query) {
       case 'backspace':
       case 'delete':
         queryBuffer.pop();
-        callAndPrint(rl, queryBuffer.join(''));
+        callAndPrint(rl, queryBuffer.join(''), config);
         break;
       case 'return':
         break;
       default:
         queryBuffer.push(key);
-        callAndPrint(rl, queryBuffer.join(''));
+        callAndPrint(rl, queryBuffer.join(''), config);
     }
   });
 
   rl.on('line', (query) => {
-    pwyllCall('65b79e94feccf1b54511d1a2', queryBuffer.join(''))
+    searchSnippetPwyllCall(config.pwyllUrl, config.userID, queryBuffer.join(''))
     .then((snippets) => {
       console.clear();
       clipboardy.writeSync(snippets[0].snippet);
@@ -86,5 +84,5 @@ function callAndPrint(rl, query) {
     console.log(colors.white('cya!') + colors.grey(' :)'));
     process.exit();
   });
-})();
+}
 

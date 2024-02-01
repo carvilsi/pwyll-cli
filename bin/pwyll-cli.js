@@ -6,6 +6,7 @@ import { Command } from 'commander';
 import { pwyllCli } from './../src/index.js';
 import { signUp } from './../src/signUp.js'; 
 import { add } from './../src/addSnippet.js'; 
+import { search } from './../src/searchSnippet.js';
 import fs from 'fs';
 
 const info = JSON.parse(fs.readFileSync('./package.json'));
@@ -27,23 +28,20 @@ program
   
 program  
   .command('s')
-  .description('searches snippets for the current signed up user')
+  .description('searches snippets for the current signed up user and copies the ' + 
+               'selected one to the clipboard')
   .action(() => {
-    pwyllCli({hi: "there"});
+    search();
   });
   
 program  
-  .command('a')
+  .command('n')
   .description('creates new snippet for the current signed up user')
   .action(() => {
     add();
   });
-//.option('-c, --config','configuration mode, for user and pwyll server URL')
-//.option('-u, --update','update a snippet')
-//.option('-s, --sign-up','sign up')
-//.option('-a, --add','add a new snippet')
-//.option('-f, --find-all','query for snippets from any user')
-//.option('-d, --delete', 'delete snippet');
+
+//TODO: implement update, find-all and delete snippets
 
 program.parse();
 
