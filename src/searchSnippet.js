@@ -7,8 +7,11 @@ import { configReader,
          infoHandler } from './util.js';
 
 async function searchSnippetPwyllCall(pwyllUrl, userID, query) {
-  const response = 
-    await axios.get(`${pwyllUrl}/command/find?q=${query}&userId=${userID}`);
+  let url = `${pwyllUrl}/command/find?q=${query}`;
+  if (userID !== null) url = `${pwyllUrl}/command/find?q=${query}&userId=${userID}`
+  
+  const response = await axios.get(url);
+  
   let snippets = [];
   if (!response.data.length) {
     return snippets;
@@ -42,8 +45,13 @@ function callAndPrint(rl, query, config) {
   });
 }
 
-export async function search() {
+export async function search(options) {
   const config = configReader();
+
+  // if all is true we do not want the userID, 
+  // the backend will search snippets for any user.
+  if (options.all) config.userID = null;
+
   let queryBuffer = [];
 
 	const rl = readline.createInterface({ 

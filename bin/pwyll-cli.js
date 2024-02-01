@@ -3,7 +3,6 @@
 'use strict';
 
 import { Command } from 'commander';
-import { pwyllCli } from './../src/index.js';
 import { signUp } from './../src/signUp.js'; 
 import { add } from './../src/addSnippet.js'; 
 import { search } from './../src/searchSnippet.js';
@@ -31,7 +30,15 @@ program
   .description('searches snippets for the current signed up user and copies the ' + 
                'selected one to the clipboard')
   .action(() => {
-    search();
+    search({ all: false});
+  });
+   
+program  
+  .command('sa')
+  .description('searches snippets from any user and copies the ' + 
+               'selected one to the clipboard')
+  .action(() => {
+    search({ all: true });
   });
   
 program  
@@ -41,7 +48,7 @@ program
     add();
   });
 
-//TODO: implement update, find-all and delete snippets
+//TODO: implement update and delete snippets
 
 program.parse();
 
