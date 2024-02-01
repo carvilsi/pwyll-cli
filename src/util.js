@@ -22,7 +22,7 @@ export function infoHandler(infoMessage) {
 export function configHandler(url, username, userID) {
    try {
      const config = {
-       pywllServer: url,
+       pwyllUrl: url,
        username: username,
        userID: userID,
      }
@@ -36,11 +36,22 @@ export function configHandler(url, username, userID) {
        infoHandler(`user ${username} created, with ID: ${userID} on pwyll at ${url}`);
        infoHandler(`data saved at ${CONFIG_FILE}`);
      } else {
-       errorHandler(`configuration file ${CONFIG_FILE} already exists,
-        if you need to modify it, please edit manually`);
+       errorHandler(`configuration file ${CONFIG_FILE} already exists, ` +
+                    'if you need to modify it, please edit manually');
      }
    } catch (err) {
      errorHandler(err.message);
    }
+}
+
+export function configReader() {
+  if (fs.existsSync(CONFIG_FILE)) {
+    const config = JSON.parse(fs.readFileSync(CONFIG_FILE));
+    return config;
+  } else {
+    throw new Error(`the configuration file ${CONFIG_FILE} does not exists, ` +
+                    'create one with command \'$ ./bin/pwyll-cli.js signup ' +
+                    '<url> <username>\'');
+  }
 }
 
