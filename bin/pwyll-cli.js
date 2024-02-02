@@ -14,9 +14,14 @@ const program = new Command();
 
 program
   .name(info.name)
-  .description(info.description)
+  .description(`${info.description}  
+                  ┓┓  ┓•
+           ┏┓┓┏┏┓┏┃┃ ┏┃┓
+           ┣┛┗┻┛┗┫┗┗━┗┗┗
+           ┛     ┛      
+          <3 by carvilsi`)
   .version(info.version)
-  .usage('[options] \n\t if no options provided the default mode is query for snippets from user')
+  .usage('[options] command')
   .command('signup')
   .argument('<url>', 'the URL of pwyll server, e.g. http://localhost:46520')
   .argument('<username>', 'the user name for usage')

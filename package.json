@@ -1,7 +1,7 @@
 {
   "name": "pwyll-cli",
   "version": "1.0.0",
-  "description": "the cli for pwyll",
+  "description": "the cli for pwyll to deal with snippets",
   "main": "rl.js",
   "type": "module",
   "bin": {
