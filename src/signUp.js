@@ -1,19 +1,5 @@
-import axios from 'axios';
 import { errorHandler, configHandler } from './util.js';
-
-async function signUpPwyllCall(pwyllUrl, username) {
-  try {
-    const response = await axios.post(`${pwyllUrl}/user`, { username: username });
-    const userID = response.data;
-    return userID;
-  } catch (error) {
-    if (typeof error.response.data.message !== 'undefined') {
-      throw new Error(error.response.data.message);
-    } else {
-      throw error;
-    }
-  }
-}
+import { signUpPwyllCall } from './pwyllServerCalls.js';
 
 export async function signUp(pwyllUrl, username) {
  try {

@@ -1,17 +1,7 @@
 import prompts from 'prompts';
-import axios from 'axios';
-import { configReader,
-         errorHandler, 
-         infoHandler } from './util.js';
 
-async function addSnippetPwyllCall(pwyllUrl, snippet, description, userID) {
-  const response = await axios.post(`${pwyllUrl}/command`, {
-    command: snippet,
-    description: description,
-    userId: userID,
-  });
-   infoHandler(`snippet saved with ID: ${response.data}`);
-}
+import { configReader, errorHandler } from './util.js';
+import { addSnippetPwyllCall } from './pwyllServerCalls.js';
 
 export async function add() {
  try {
@@ -30,8 +20,11 @@ export async function add() {
    ];
 
    const answers = await prompts(questions, { onCancel:cleanup });
-   await addSnippetPwyllCall(config.pwyllUrl, answers.snippet, 
-     answers.description, config.userID);
+   const snippetObj = {
+     snippet: answers.snippet,
+     description: answers.description,
+   }
+   await addSnippetPwyllCall(snippetObj, config);
  } catch (err) {
    errorHandler(err.message);
  } finally {

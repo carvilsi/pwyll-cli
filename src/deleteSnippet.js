@@ -1,37 +1,32 @@
 import prompts from 'prompts';
-import axios from 'axios';
-import { configReader,
-         errorHandler, 
-         infoHandler } from './util.js';
+import chalk from 'chalk';
 
-async function addSnippetPwyllCall(pwyllUrl, snippet, description, userID) {
-  const response = await axios.post(`${pwyllUrl}/command`, {
-    command: snippet,
-    description: description,
-    userId: userID,
-  });
-   infoHandler(`snippet saved with ID: ${response.data}`);
+import { deleteSnippetPwyllCall } from './pwyllServerCalls.js';
+import { cyaAndExit } from './util.js';
+
+function renderSnippet(snippetObj) {
+  console.log(chalk.green(snippetObj.snippet) + chalk.grey(' | ') + 
+               chalk.grey(snippetObj.description));
 }
 
-export async function delSnippet(snippetObj) {
+export async function delSnippet(snippetObj, config) {
  try {
-   const config = configReader();
+   renderSnippet(snippetObj);
    const questions = [
      {
-       type: 'text',
-       name: 'snippet',
-       message: 'snippet:',
-     },
-     {
-       type: 'text',
-       name: 'description',
-       message: 'description:',
+       type: 'confirm',
+       name: 'value',
+       message: 'Do you want to delete this snippet?',
+       initial: true,
      }
    ];
 
    const answers = await prompts(questions, { onCancel:cleanup });
-   await addSnippetPwyllCall(config.pwyllUrl, answers.snippet, 
-     answers.description, config.userID);
+   if (answers.value) {
+     await deleteSnippetPwyllCall(snippetObj, config);
+   } else {
+     cyaAndExit({ sentence: 'OK then,', username: config.username });
+   }
  } catch (err) {
    errorHandler(err.message);
  } finally {

@@ -67,9 +67,5 @@ program
     search({ del: true });
   });
 
-
-
-//TODO: implement update and delete snippets
-
 program.parse();
 
