@@ -35,7 +35,7 @@ program
   .description('searches snippets for the current signed up user and copies the ' + 
                'selected one to the clipboard')
   .action(() => {
-    search({ all: false});
+    search();
   });
    
 program  
@@ -43,7 +43,7 @@ program
   .description('searches snippets from any user and copies the ' + 
                'selected one to the clipboard')
   .action(() => {
-    search({ all: true });
+    search({ searchAll: true });
   });
   
 program  
@@ -52,6 +52,22 @@ program
   .action(() => {
     add();
   });
+  
+program  
+  .command('u')
+  .description('updates a snippet for the current signed up user')
+  .action(() => {
+    search({ update: true });
+  });
+  
+program  
+  .command('d')
+  .description('deletes a snippet for the current signed up user')
+  .action(() => {
+    search({ del: true });
+  });
+
+
 
 //TODO: implement update and delete snippets
 
