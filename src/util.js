@@ -1,22 +1,24 @@
-import colors from 'colors';
+import chalk from 'chalk';
 import { homedir } from 'os';
 import path from 'path';
 import fs from 'fs';
+
+const log = console.log;
 
 const CONFIG_FOLDER = `${homedir}${path.sep}.pwyll-cli`;
 const CONFIG_FILE = `${CONFIG_FOLDER}${path.sep}pwyll-config.json`;
 
 //XXX: maybe replace these three functions with logmeplease
 export function errorHandler(errorMessage) {
-  console.log(`[${colors.red('ERROR')}] ${errorMessage}`);
+  log(`[${chalk.red('ERROR')}] ${errorMessage}`);
 }
 
 export function warningHandler(warningMessage) {
-  console.log(`[${colors.yellow('WARN')}] ${warningMessage}`);
+  log(`[${chalk.yellow('WARN')}] ${warningMessage}`);
 }
 
 export function infoHandler(infoMessage) {
-  console.log(`[${colors.green('INFO')}] ${infoMessage}`);
+  log(`[${chalk.green('INFO')}] ${infoMessage}`);
 }
 
 export function configHandler(url, username, userID) {
@@ -53,5 +55,11 @@ export function configReader() {
                     'create one with command \'$ ./bin/pwyll-cli.js signup ' +
                     '<url> <username>\'');
   }
+}
+
+export function lineDiv() {
+  const col = process.stdout.columns;
+  const str = '-'.repeat(col);
+  return str;
 }
 

@@ -1,28 +1,37 @@
 import axios from 'axios';
 import readline from 'node:readline';
-import colors from 'colors';
+import chalk from 'chalk';
 import clipboardy from 'clipboardy';
 import { configReader,
          errorHandler, 
-         infoHandler } from './util.js';
+         infoHandler,
+         lineDiv } from './util.js';
+
+const log = console.log;
 
 async function searchSnippetPwyllCall(pwyllUrl, userID, query) {
-  let url = `${pwyllUrl}/command/find?q=${query}`;
-  if (userID !== null) url = `${pwyllUrl}/command/find?q=${query}&userId=${userID}`
-  
-  const response = await axios.get(url);
-  
   let snippets = [];
-  if (!response.data.length) {
-    return snippets;
-  } else {
-    for (var i = 0; i < response.data.length; i++) {
-      const snippet = {
-        snippet: response.data[i].command,
-        description: response.data[i].description,
+
+  try {
+    let url = `${pwyllUrl}/command/find?q=${query}`;
+    if (userID !== null) url = `${pwyllUrl}/command/find?q=${query}&userId=${userID}`
+  
+    const response = await axios.get(url);
+
+    if (!response.data.length) {
+      return snippets;
+    } else {
+      for (var i = 0; i < response.data.length; i++) {
+        const snippet = {
+          snippet: response.data[i].command,
+          description: response.data[i].description,
+      }
+        snippets.push(snippet);
     }
-      snippets.push(snippet);
-  }
+      return snippets;
+    }
+  } catch (err) {
+    errorHandler(err.message);
     return snippets;
   }
 }
@@ -34,13 +43,21 @@ function callAndPrint(rl, query, config) {
     rl.write(null, { ctrl: true, name: 'u' }); 
     rl.prompt();
     rl.write(query);
-    console.log('\n');
+    log('\n');
     if (snippets.length) {
+      log(chalk.white(lineDiv()));
       for (let i=0; i < snippets.length; i++) {
-        console.log(`${colors.green(snippets[i].snippet)} | ${colors.grey(snippets[i].description)}`);
+        // we want the first little bit more bright since is the 
+        // one that will be selected when enter key will be pressed
+        const cmd = i === 0 ? chalk.greenBright(snippets[i].snippet) :
+                              chalk.green(snippets[i].snippet);
+        
+        log(cmd + chalk.grey(' | ') + 
+            chalk.grey(snippets[i].description));
+        log(chalk.grey(lineDiv()));
       }
     } else {
-      console.log(colors.white('No results ') + colors.grey(' -.-'));
+      log(chalk.white('No results ') + chalk.grey(' -.-'));
     }
   });
 }
@@ -83,13 +100,13 @@ export async function search(options) {
     .then((snippets) => {
       console.clear();
       clipboardy.writeSync(snippets[0].snippet);
-      console.log(`${snippets[0].snippet}`);
+      log(`${snippets[0].snippet}`);
       process.exit();
     });
   });
 
   rl.on('close', () => {
-    console.log(colors.white('cya!') + colors.grey(' :)'));
+    log(chalk.white('cya!') + chalk.grey(' :)'));
     process.exit();
   });
 }
