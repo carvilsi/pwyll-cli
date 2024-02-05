@@ -1,12 +1,8 @@
-<div class="text" align="center">
-    <pre>
-             ┓┓  ┓•
-      ┏┓┓┏┏┓┏┃┃ ┏┃┓
-      ┣┛┗┻┛┗┫┗┗━┗┗┗
-┛     ┛
-
-the cli for the simple snippet manager service
-    </pre>
+<div align="center">
+  <p>
+    <img src="https://github.com/carvilsi/pwyll-cli/blob/main/img/pwyll-cli.png" alt="pwyll-cli" >
+  </p>
+  <p>the cli for the simple snippet manager service</p>
 </div>
 
 # pwyll-cli
