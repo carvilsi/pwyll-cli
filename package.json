@@ -1,8 +1,8 @@
 {
   "name": "pwyll-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "the cli for pwyll to deal with snippets",
-  "main": "rl.js",
+  "main": "./src/searchSnippet.js",
   "type": "module",
   "bin": {
     "pwyll-cli": "bin/pwyll-cli.js"
@@ -18,7 +18,7 @@
     "snippet"
   ],
   "author": "carvilsi@gmail.com",
-  "license": "",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/carvilsi/pwyll-cli/issues"
   },
