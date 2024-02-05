@@ -1,8 +1,8 @@
 <div class="text" align="center">
     <pre>
-       ┓┓  ┓•
-┏┓┓┏┏┓┏┃┃ ┏┃┓
-┣┛┗┻┛┗┫┗┗━┗┗┗
+          ┓┓  ┓•
+   ┏┓┓┏┏┓┏┃┃ ┏┃┓
+   ┣┛┗┻┛┗┫┗┗━┗┗┗
 ┛     ┛
 
 the cli for the simple snippet manager service
