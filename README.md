@@ -1,11 +1,12 @@
-<div align="center">
-    <textarea>
-       ┓┓  ┓•
-┏┓┓┏┏┓┏┃┃ ┏┃┓
-┣┛┗┻┛┗┫┗┗━┗┗┗
+<div class="text" align="center">
+    <pre>
+           ┓┓  ┓•
+    ┏┓┓┏┏┓┏┃┃ ┏┃┓
+    ┣┛┗┻┛┗┫┗┗━┗┗┗
 ┛     ┛
-the cli for the simple snippet manager service<br>
-    </textarea>
+
+the cli for the simple snippet manager service
+    </pre>
 </div>
 
 # pwyll-cli
