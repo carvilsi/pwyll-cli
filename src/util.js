@@ -64,7 +64,7 @@ export function lineDiv() {
 }
 
 export function cyaAndExit({ sentence = '', username = '' } = {}) {
-  log(chalk.white(`${sentence} ${username} cya!`) + chalk.grey(' :)'));
+  log(chalk.white(`${sentence} ${username} cya!`.trim()) + chalk.grey(' :)'));
   process.exit();
 }
 
