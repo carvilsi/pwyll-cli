@@ -8,7 +8,8 @@
     "pwyll-cli": "bin/pwyll-cli.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "release": "tag=$(node -e \"console.log(require('./package.json').version)\"); git tag v${tag}; git push origin v${tag} && npm publish"
   },
   "repository": {
     "type": "git",
