@@ -4,6 +4,7 @@
 ┏┓┓┏┏┓┏┃┃ ┏┃┓
 ┣┛┗┻┛┗┫┗┗━┗┗┗
 ┛     ┛
+
 the cli for the simple snippet manager service
     </pre>
 </div>
