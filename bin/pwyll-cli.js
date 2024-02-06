@@ -8,19 +8,17 @@ import { add } from './../src/addSnippet.js';
 import { search } from './../src/searchSnippet.js';
 import fs from 'fs';
 
-const info = JSON.parse(fs.readFileSync('./package.json'));
-
 const program = new Command();
 
 program
-  .name(info.name)
-  .description(`${info.description}  
+  .name('pwyll-cli')
+  .description(`the cli for pwyll to deal with snippets
                   ┓┓  ┓•
            ┏┓┓┏┏┓┏┃┃ ┏┃┓
            ┣┛┗┻┛┗┫┗┗━┗┗┗
            ┛     ┛      
           <3 by carvilsi`)
-  .version(info.version)
+  .version('1.0.2')
   .usage('[options] command')
   .command('signup')
   .argument('<url>', 'the URL of pwyll server, e.g. http://localhost:46520')

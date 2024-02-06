@@ -1,5 +1,9 @@
 # Changelog
 
+# [v1.0.2](https://github.com/carvilsi/pwyll-cli/releases/tag/v1.0.2) (2024-02-06)
+
+* Fixes issue with global npm execution
+
 # [v1.0.1](https://github.com/carvilsi/pwyll-cli/releases/tag/v1.0.1) (2024-02-05)
 
 * Ignoring img folder for npm publish 
