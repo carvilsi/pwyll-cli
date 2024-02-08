@@ -26,11 +26,11 @@ function callAndPrint(rl, query, config) {
                 for (let i = 0; i < snippets.length; i++) {
                     // we want the first little bit more bright since is the
                     // one that will be selected when enter key will be pressed
-                    const cmd = i === FIRST_SNIPPET ? chalk.greenBright(snippets[i].snippet) :
+                    const snppt = i === FIRST_SNIPPET ? chalk.greenBright(snippets[i].snippet) :
                         chalk.green(snippets[i].snippet);
+                    const dscrptn = chalk.grey(snippets[i].description);
 
-                    log(cmd + chalk.grey(' | ') +
-                        chalk.grey(snippets[i].description));
+                    log(`${dscrptn}\n${snppt}`);
                     log(chalk.grey(lineDiv()));
                     // XXX: it is possible to add the user that created the snippet
                 }
