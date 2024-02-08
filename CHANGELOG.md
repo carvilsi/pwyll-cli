@@ -1,5 +1,11 @@
 # Changelog
 
+# [v1.0.3](https://github.com/carvilsi/pwyll-cli/releases/tag/v1.0.3) (2024-02-08)
+
+* Fixes crash due a missing import
+* Added linter (also for CI/CD)
+* Changes on UI, placing first the description to snippet and new line
+
 # [v1.0.2](https://github.com/carvilsi/pwyll-cli/releases/tag/v1.0.2) (2024-02-06)
 
 * Fixes issue with global npm execution
@@ -16,5 +22,4 @@
     - delete a snippet
     - update a snippet
     - search snippets for user and for any user
-
 
