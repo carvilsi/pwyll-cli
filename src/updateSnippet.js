@@ -1,6 +1,6 @@
 import prompts from 'prompts';
 
-import { errorHandler, cleanup } from './util.js';
+import { errorHandler, cleanup, infoHandler } from './util.js';
 import { updateSnippetPwyllCall } from './pwyllServerCalls.js';
 
 export async function updateSnippet(snippetObj, config) {
@@ -23,7 +23,12 @@ export async function updateSnippet(snippetObj, config) {
         const answers = await prompts(questions, { onCancel:cleanup });
         snippetObj.snippet = answers.snippet;
         snippetObj.description = answers.description;
-        await updateSnippetPwyllCall(snippetObj, config);
+        const response = await updateSnippetPwyllCall(snippetObj, config);
+        if (response.data) {
+            infoHandler(`snippet with ID: ${snippetObj.id} has been updated`);
+        } else {
+            throw new Error(`something went wrong when updating the snippet with ID: ${snippetObj.id}`);
+        }
     } catch (err) {
         errorHandler(err.message);
     } finally {

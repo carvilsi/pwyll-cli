@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { infoHandler,
-    errorHandler } from './util.js';
+import { errorHandler } from './util.js';
 
 // delete a snippet
 export async function deleteSnippetPwyllCall(snippetObj, config) {
@@ -38,14 +37,12 @@ export async function signUpPwyllCall(pwyllUrl, username) {
 
 // update a snippet
 export async function updateSnippetPwyllCall(snippetObj, config) {
-    console.dir(snippetObj);
-    const response = await axios.put(`${config.pwyllUrl}/command`, {
+    return await axios.put(`${config.pwyllUrl}/command`, {
         command: snippetObj.snippet,
         description: snippetObj.description,
         userId: config.userID,
         id: snippetObj.id,
     });
-    infoHandler(`snippet updated with ID: ${response.data}`);
 }
 
 // search snippets
