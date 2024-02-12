@@ -10,11 +10,13 @@ import { configReader,
     cyaAndExit } from './util.js';
 
 const log = console.log;
-const FIRST_SNIPPET = 0;
+let SELECTED_SNIPPET = 0;
+let snippetsLength = 0;
 
 function callAndPrint(rl, query, config) {
     searchSnippetPwyllCall(query, config)
         .then((snippets) => {
+            snippetsLength = snippets.length;
             console.clear();
             rl.write(null, { ctrl: true, name: 'u' });
             rl.prompt();
@@ -26,11 +28,15 @@ function callAndPrint(rl, query, config) {
                 for (let i = 0; i < snippets.length; i++) {
                     // we want the first little bit more bright since is the
                     // one that will be selected when enter key will be pressed
-                    const snppt = i === FIRST_SNIPPET ? chalk.greenBright(snippets[i].snippet) :
-                        chalk.green(snippets[i].snippet);
+                    const snppt = i === SELECTED_SNIPPET ? chalk.whiteBright(snippets[i].snippet) :
+                        chalk.white(snippets[i].snippet);
                     const dscrptn = chalk.grey(snippets[i].description);
 
-                    log(`${dscrptn}\n${snppt}`);
+                    if (i === SELECTED_SNIPPET) {
+                      log(`${SELECTED_SNIPPET}-| ${dscrptn}\n-| ${snppt}`);
+                    } else {
+                      log(`${dscrptn}\n${snppt}`);
+                    }
                     log(chalk.grey(lineDiv()));
                     // XXX: it is possible to add the user that created the snippet
                 }
@@ -88,9 +94,26 @@ export async function search({
             queryBuffer.pop();
             callAndPrint(rl, queryBuffer.join(''), config);
             break;
+        case 'down':
+            if (SELECTED_SNIPPET < snippetsLength - 1) SELECTED_SNIPPET++;
+            callAndPrint(rl, queryBuffer.join(''), config);
+            break;
+        case 'up':
+            if (SELECTED_SNIPPET - 1 >= 0) SELECTED_SNIPPET--;
+            callAndPrint(rl, queryBuffer.join(''), config);
+            break;
+        case 'right':
+            SELECTED_SNIPPET = snippetsLength - 1;
+            callAndPrint(rl, queryBuffer.join(''), config);
+            break;
+        case 'left':
+            SELECTED_SNIPPET = 0;
+            callAndPrint(rl, queryBuffer.join(''), config);
+            break;
         case 'return':
             break;
         default:
+            SELECTED_SNIPPET = 0;
             queryBuffer.push(key);
             callAndPrint(rl, queryBuffer.join(''), config);
         }
@@ -104,7 +127,7 @@ export async function search({
                 // Once the enter key was pressed we just take care about the first
                 // search snippet result.
                 if (snippets.length) {
-                    const snippetObj = snippets[FIRST_SNIPPET];
+                    const snippetObj = snippets[SELECTED_SNIPPET];
                     if (del) {
                         process.stdin.removeListener('keypress', listener);
                         rl.close();

@@ -31,4 +31,15 @@
     d                        deletes a snippet for the current signed up user
     help [command]           display help for command
 
+### Keys
+
+Query snippets while typing.
+
+|  Key binding  |         Description            |
+|---------------|--------------------------------|
+| `Arrow down`  | move down selected snippet     |
+| `Arrow up`    | move up selected snippet       |
+| `Arrow right` | selects last snippet           |
+| `Arrow left`  | selects first snippet          |
+| `Enter`       | copy selected snippet and exit |
 
