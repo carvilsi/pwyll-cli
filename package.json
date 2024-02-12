@@ -1,6 +1,6 @@
 {
   "name": "pwyll-cli",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "the cli for pwyll to deal with snippets",
   "main": "./src/searchSnippet.js",
   "type": "module",
@@ -9,6 +9,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "pre-release": "./pre-release.sh",
     "release": "tag=$(node -e \"console.log(require('./package.json').version)\"); git tag v${tag}; git push origin v${tag} && npm publish",
     "linter": "./node_modules/eslint/bin/eslint.js src/ --ext .js"
   },

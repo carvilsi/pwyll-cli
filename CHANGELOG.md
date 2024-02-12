@@ -1,6 +1,10 @@
 # Changelog
 
-# [v1.0.4](https://github.com/carvilsi/pwyll-cli/releases/tag/v1.0.4) (2024-02-12)
+# [v1.0.6](https://github.com/carvilsi/pwyll-cli/releases/tag/v1.0.6) (2024-02-12)
+
+* fixes issue where version was wrong on --version option 
+
+# [v1.0.5](https://github.com/carvilsi/pwyll-cli/releases/tag/v1.0.5) (2024-02-12)
 
 * improving UX adding arrow to select the snippet 
 * improving release procedure
