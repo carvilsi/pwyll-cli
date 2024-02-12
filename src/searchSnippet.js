@@ -33,9 +33,9 @@ function callAndPrint(rl, query, config) {
                     const dscrptn = chalk.grey(snippets[i].description);
 
                     if (i === SELECTED_SNIPPET) {
-                      log(`${SELECTED_SNIPPET}-| ${dscrptn}\n-| ${snppt}`);
+                        log(`${SELECTED_SNIPPET}-| ${dscrptn}\n-| ${snppt}`);
                     } else {
-                      log(`${dscrptn}\n${snppt}`);
+                        log(`${dscrptn}\n${snppt}`);
                     }
                     log(chalk.grey(lineDiv()));
                     // XXX: it is possible to add the user that created the snippet
@@ -95,11 +95,15 @@ export async function search({
             callAndPrint(rl, queryBuffer.join(''), config);
             break;
         case 'down':
-            if (SELECTED_SNIPPET < snippetsLength - 1) SELECTED_SNIPPET++;
+            if (SELECTED_SNIPPET < snippetsLength - 1) {
+                SELECTED_SNIPPET++;
+            }
             callAndPrint(rl, queryBuffer.join(''), config);
             break;
         case 'up':
-            if (SELECTED_SNIPPET - 1 >= 0) SELECTED_SNIPPET--;
+            if (SELECTED_SNIPPET - 1 >= 0) {
+                SELECTED_SNIPPET--;
+            }
             callAndPrint(rl, queryBuffer.join(''), config);
             break;
         case 'right':
