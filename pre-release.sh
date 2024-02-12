@@ -8,7 +8,6 @@ line="# [v${VERSION}](https:\/\/github.com\/carvilsi\/${NAME}\/releases\/tag\/v$
 last_release_date=$(head -n 3 CHANGELOG.md | tail -1 | awk '{ print $3 }' | sed 's/(\|)//g')
 commit_message=$(git log --after=${last_release_date} --format='- %s' | grep -v 'Merge')
 
-sed -i "s/pwyll:[0-9]*.[0-9]*.[0-9]*/pwyll:${VERSION}/g" $DCKCMPS
 sed -i '2s/^/\nnewchangelogentry\n/' $CHNGLG
 sed -i "s/newchangelogentry/${line}\n\n- ${commit_message}/g" $CHNGLG
 
