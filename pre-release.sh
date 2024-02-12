@@ -1,6 +1,7 @@
 #!/bin/bash
 
 CHNGLG=CHANGELOG.md
+BNRY=bin/pwyll-cli.js
 NAME=$(node -e "console.log(require('./package.json').name)")
 VERSION=$(node -e "console.log(require('./package.json').version)")
 today=$(date +%Y-%m-%d)
@@ -10,4 +11,5 @@ commit_message=$(git log --after=${last_release_date} --format='- %s' | grep -v 
 
 sed -i '2s/^/\nnewchangelogentry\n/' $CHNGLG
 sed -i "s/newchangelogentry/${line}\n\n- ${commit_message}/g" $CHNGLG
+sed -i "s/version('[0-9]*.[0-9]*.[0-9]*')/version('${VERSION}')/g" $BNRY
 

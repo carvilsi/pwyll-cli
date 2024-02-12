@@ -18,7 +18,7 @@ program
            ┣┛┗┻┛┗┫┗┗━┗┗┗
            ┛     ┛      
           <3 by carvilsi`)
-  .version('1.0.3')
+  .version('1.0.6')
   .usage('[options] command')
   .command('signup')
   .argument('<url>', 'the URL of pwyll server, e.g. http://localhost:46520')
