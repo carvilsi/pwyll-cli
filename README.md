@@ -35,11 +35,11 @@
 
 Query snippets while typing.
 
-|  Key binding  |         Description            |
-|---------------|--------------------------------|
-| `Arrow down`  | move down selected snippet     |
-| `Arrow up`    | move up selected snippet       |
-| `Arrow right` | selects last snippet           |
-| `Arrow left`  | selects first snippet          |
-| `Enter`       | copy selected snippet and exit |
+|  Key binding  |                                  Description                                                |
+|---------------|---------------------------------------------------------------------------------------------|
+| `Arrow down`  | move down selected snippet                                                                  |
+| `Arrow up`    | move up selected snippet                                                                    |
+| `Arrow right` | selects last snippet                                                                        |
+| `Arrow left`  | selects first snippet                                                                       |
+| `Enter`       | copy selected snippet to clipboard and exit (paste it later with `ctrl+v` or `ctrl+shift+v` |
 
