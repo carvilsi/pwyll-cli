@@ -1,5 +1,10 @@
 # Changelog
 
+# [v1.0.4](https://github.com/carvilsi/pwyll-cli/releases/tag/v1.0.4) (2024-02-12)
+
+* improving UX adding arrow to select the snippet 
+* improving release procedure
+
 # [v1.0.3](https://github.com/carvilsi/pwyll-cli/releases/tag/v1.0.3) (2024-02-08)
 
 * Fixes crash due a missing import
