@@ -3,7 +3,7 @@ import prompts from 'prompts';
 import { configReader,
     errorHandler,
     infoHandler,
-    cleanup } from './util.js';
+    cyaAndExit } from './util.js';
 import { addSnippetPwyllCall } from './pwyllServerCalls.js';
 
 export async function add() {
@@ -22,7 +22,7 @@ export async function add() {
             }
         ];
 
-        const answers = await prompts(questions, { onCancel:cleanup });
+        const answers = await prompts(questions, { onCancel:cyaAndExit });
         const snippetObj = {
             snippet: answers.snippet,
             description: answers.description,
@@ -30,6 +30,11 @@ export async function add() {
         const response = await addSnippetPwyllCall(snippetObj, config);
         infoHandler(`snippet saved with ID: ${response.data}`);
     } catch (err) {
+        if (typeof err.response.data !== 'undefined' &&
+          err.response.data.message ===
+          'Not possible to store a command for a non exiting user') {
+            err.message = 'The user does not exists, create one';
+        }
         errorHandler(err.message);
     } finally {
         process.exit();
