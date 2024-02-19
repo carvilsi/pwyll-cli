@@ -39,7 +39,7 @@ export function configHandler(url, username, userID) {
             infoHandler(`data saved at ${CONFIG_FILE}`);
         } else {
             errorHandler(`configuration file ${CONFIG_FILE} already exists, ` +
-                    'if you need to modify it, please edit manually');
+                    'if you need to modify it, please remove it and try again');
         }
     } catch (err) {
         errorHandler(err.message);

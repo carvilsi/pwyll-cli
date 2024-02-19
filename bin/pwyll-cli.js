@@ -3,7 +3,7 @@
 'use strict';
 
 import { Command } from 'commander';
-import { signUp } from './../src/signUp.js'; 
+import { signUpPrompt } from './../src/signUp.js'; 
 import { add } from './../src/addSnippet.js'; 
 import { search } from './../src/searchSnippet.js';
 import fs from 'fs';
@@ -21,11 +21,9 @@ program
   .version('1.0.6')
   .usage('[options] command')
   .command('signup')
-  .argument('<url>', 'the URL of pwyll server, e.g. http://localhost:46520')
-  .argument('<username>', 'the user name for usage')
   .description('do the sign up, creating a new user and dealing with configuration')
-  .action((url, username) => {
-    signUp(url, username);
+  .action(() => {
+    signUpPrompt();
   });
   
 program  
