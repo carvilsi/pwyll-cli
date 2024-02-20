@@ -1,5 +1,18 @@
 # Changelog
 
+# [v2.0.0](https://github.com/carvilsi/pwyll-cli/releases/tag/v2.0.0) (2024-02-20)
+
+- implemented secret for user 
+- added semver to check compatibility against server version
+- promt on sigup
+- handling correctly when canceling 
+- when create a new snippet better handling of error when the user does not exists 
+- adding linter fix to npm run
+- adding npm audit to pre-release procedure
+- fixes version for binary when version option
+- linter recomendations and disabling no-magic-numbers eslint rule
+- adding more details for key binding
+
 # [v1.0.6](https://github.com/carvilsi/pwyll-cli/releases/tag/v1.0.6) (2024-02-12)
 
 * fixes issue where version was wrong on --version option 
