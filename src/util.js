@@ -85,7 +85,8 @@ export async function checkVersion(config) {
     if (!isValidVersion) {
         throw new Error(`${pckg.name}@${pckg.version} ` +
             'not compatible with server version for ' +
-            `${pwyllInfo.name}@${pwyllInfo.version}`);
+            `${pwyllInfo.name}@${pwyllInfo.version}` +
+            ' try to update the client: $ npm isntall -g pwyll-cli');
     }
 }
 

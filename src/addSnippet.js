@@ -3,12 +3,14 @@ import prompts from 'prompts';
 import { configReader,
     errorHandler,
     infoHandler,
-    cyaAndExit } from './util.js';
+    cyaAndExit,
+    checkVersion } from './util.js';
 import { addSnippetPwyllCall } from './pwyllServerCalls.js';
 
 export async function add() {
     try {
         const config = configReader();
+        await checkVersion(config);
         const questions = [
             {
                 type: 'text',
