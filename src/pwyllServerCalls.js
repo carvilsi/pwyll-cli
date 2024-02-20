@@ -5,25 +5,28 @@ import { errorHandler } from './util.js';
 export async function deleteSnippetPwyllCall(snippetObj, config) {
     const response =
     await axios.delete(
-        `${config.pwyllUrl}/command/${snippetObj.id}/${config.userID}`);
+        `${config.pwyllUrl}/snippet/${snippetObj.id}/${config.userID}/${config.secret}`);
     return response;
 }
 
 // creating new snippet
 export async function addSnippetPwyllCall(snippetObj, config) {
-    const response = await axios.post(`${config.pwyllUrl}/command`, {
-        command: snippetObj.snippet,
+    const response = await axios.post(`${config.pwyllUrl}/snippet`, {
+        snippet: snippetObj.snippet,
         description: snippetObj.description,
-        userId: config.userID,
+        userID: config.userID,
+        secret: config.secret,
     });
     return response;
 }
 
 // sign up
-export async function signUpPwyllCall(pwyllUrl, username) {
+export async function signUpPwyllCall(pwyllUrl, username, secret) {
     try {
-        const response = await axios.post(`${pwyllUrl}/user`,
-            { username: username });
+        const response = await axios.post(`${pwyllUrl}/user`, {
+            username: username,
+            secret: secret,
+        });
         const userID = response.data;
         return userID;
     } catch (error) {
@@ -37,11 +40,12 @@ export async function signUpPwyllCall(pwyllUrl, username) {
 
 // update a snippet
 export async function updateSnippetPwyllCall(snippetObj, config) {
-    return await axios.put(`${config.pwyllUrl}/command`, {
-        command: snippetObj.snippet,
+    return await axios.put(`${config.pwyllUrl}/snippet`, {
+        snippet: snippetObj.snippet,
         description: snippetObj.description,
-        userId: config.userID,
+        userID: config.userID,
         id: snippetObj.id,
+        secret: config.secret,
     });
 }
 
@@ -50,9 +54,9 @@ export async function searchSnippetPwyllCall(query, config) {
     let snippets = [];
 
     try {
-        let url = `${config.pwyllUrl}/command/find?q=${query}`;
+        let url = `${config.pwyllUrl}/snippet/find?q=${query}`;
         if (config.userID !== null) {
-            url = `${url}&userId=${config.userID}`;
+            url = `${url}&userID=${config.userID}`;
         }
 
         const response = await axios.get(url);
@@ -62,7 +66,7 @@ export async function searchSnippetPwyllCall(query, config) {
         }
         for (let i = 0; i < response.data.length; i++) {
             const snippet = {
-                snippet: response.data[i].command,
+                snippet: response.data[i].snippet,
                 description: response.data[i].description,
                 username: response.data[i].username,
                 id: response.data[i]._id,
@@ -76,3 +80,17 @@ export async function searchSnippetPwyllCall(query, config) {
     }
 }
 
+// retrieve info for pwyll server
+export async function retrieveInfo(config) {
+    try {
+        const url = `${config.pwyllUrl}/info`;
+        const res = await axios.get(url, { timeout: 1000 });
+        return res.data;
+    } catch (error) {
+        if ((/ECONNREFUSED/).test(error.message) || (/timeout of/).test(error.message)) {
+            throw new Error(`No pwyll server running at ${config.pwyllUrl}`);
+        } else {
+            throw error;
+        }
+    }
+}

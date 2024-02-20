@@ -30,11 +30,6 @@ export async function add() {
         const response = await addSnippetPwyllCall(snippetObj, config);
         infoHandler(`snippet saved with ID: ${response.data}`);
     } catch (err) {
-        if (typeof err.response.data !== 'undefined' &&
-          err.response.data.message ===
-          'Not possible to store a command for a non exiting user') {
-            err.message = 'The user does not exists, create one';
-        }
         errorHandler(err.message);
     } finally {
         process.exit();

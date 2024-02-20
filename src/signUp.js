@@ -1,18 +1,7 @@
 import prompts from 'prompts';
 
-import { errorHandler, configHandler, cyaAndExit } from './util.js';
+import { errorHandler, configHandler, cyaAndExit, checkVersion } from './util.js';
 import { signUpPwyllCall } from './pwyllServerCalls.js';
-
-async function signUp(pwyllUrl, username) {
-    try {
-        const userID = await signUpPwyllCall(pwyllUrl, username);
-        configHandler(pwyllUrl, username, userID);
-    } catch (err) {
-        errorHandler(err.message);
-    } finally {
-        process.exit();
-    }
-}
 
 export async function signUpPrompt() {
     try {
@@ -30,22 +19,26 @@ export async function signUpPrompt() {
             },
             {
                 type: 'password',
-                name: 'password',
-                message: 'type your password:',
+                name: 'secret',
+                message: 'type your secret:',
             },
             {
                 type: 'password',
-                name: 'repeatPassword',
-                message: 'type your password again:',
+                name: 'repeatSecret',
+                message: 'type your secret again:',
             }
         ];
 
         const answers = await prompts(questions, { onCancel:cyaAndExit });
-        console.dir(answers);
-        if (answers.password !== answers.repeatPassword) {
+        const url = answers.url.trim();
+        const secret = answers.secret.trim();
+        const username = answers.username.trim();
+        await checkVersion({ pwyllUrl: url });
+        if (secret !== answers.repeatSecret.trim()) {
             throw new Error('the provided passwords does not match, please repeat again');
         }
-        await signUp(answers.url, answers.username);
+        const userID = await signUpPwyllCall(url, username, secret);
+        configHandler(url, username, userID, secret);
     } catch (err) {
         errorHandler(err.message);
     } finally {
