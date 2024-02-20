@@ -3,29 +3,32 @@
 'use strict';
 
 import { Command } from 'commander';
-import { signUp } from './../src/signUp.js'; 
+import { signUpPrompt } from './../src/signUp.js'; 
 import { add } from './../src/addSnippet.js'; 
 import { search } from './../src/searchSnippet.js';
 import fs from 'fs';
+import * as url from 'url';
+import path from 'node:path';
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+
+const pckg = JSON.parse(fs.readFileSync(path.join(__dirname, './../package.json')));
 
 const program = new Command();
 
 program
-  .name('pwyll-cli')
-  .description(`the cli for pwyll to deal with snippets
+  .name(pckg.name)
+  .description(`${pckg.description}
                   ┓┓  ┓•
            ┏┓┓┏┏┓┏┃┃ ┏┃┓
            ┣┛┗┻┛┗┫┗┗━┗┗┗
            ┛     ┛      
           <3 by carvilsi`)
-  .version('1.0.6')
+  .version(pckg.version)
   .usage('[options] command')
   .command('signup')
-  .argument('<url>', 'the URL of pwyll server, e.g. http://localhost:46520')
-  .argument('<username>', 'the user name for usage')
   .description('do the sign up, creating a new user and dealing with configuration')
-  .action((url, username) => {
-    signUp(url, username);
+  .action(() => {
+    signUpPrompt();
   });
   
 program  

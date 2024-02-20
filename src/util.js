@@ -2,11 +2,17 @@ import chalk from 'chalk';
 import { homedir } from 'os';
 import path from 'path';
 import fs from 'fs';
+import semver from 'semver';
+import * as url from 'url';
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+
+import { retrieveInfo } from './pwyllServerCalls.js';
 
 const log = console.log;
 
 const CONFIG_FOLDER = `${homedir}${path.sep}.pwyll-cli`;
 const CONFIG_FILE = `${CONFIG_FOLDER}${path.sep}pwyll-config.json`;
+const PACKAGE_JSON = './../package.json';
 
 // XXX: maybe replace these three functions with logmeplease
 export function errorHandler(errorMessage) {
@@ -21,12 +27,13 @@ export function infoHandler(infoMessage) {
     log(`[${chalk.green('INFO')}] ${infoMessage}`);
 }
 
-export function configHandler(url, username, userID) {
+export function configHandler(urlServer, username, userID, secret) {
     try {
         const config = {
-            pwyllUrl: url,
+            pwyllUrl: urlServer,
             username: username,
             userID: userID,
+            secret: secret,
         };
         if (!fs.existsSync(CONFIG_FOLDER)) {
             fs.mkdirSync(CONFIG_FOLDER);
@@ -35,11 +42,11 @@ export function configHandler(url, username, userID) {
         }
         if (!fs.existsSync(CONFIG_FILE)) {
             fs.writeFileSync(CONFIG_FILE, JSON.stringify(config));
-            infoHandler(`user ${username} created, with ID: ${userID} on pwyll at ${url}`);
+            infoHandler(`user ${username} created, with ID: ${userID} on pwyll at ${urlServer}`);
             infoHandler(`data saved at ${CONFIG_FILE}`);
         } else {
             errorHandler(`configuration file ${CONFIG_FILE} already exists, ` +
-                    'if you need to modify it, please edit manually');
+                    'if you need to modify it, please remove it and try again');
         }
     } catch (err) {
         errorHandler(err.message);
@@ -70,3 +77,16 @@ export function cyaAndExit({ sentence = '', username = '' } = {}) {
 export function cleanup() {
     console.clear();
 }
+
+export async function checkVersion(config) {
+    const pwyllInfo = await retrieveInfo(config);
+    const pckg = JSON.parse(fs.readFileSync(path.join(__dirname, PACKAGE_JSON)));
+    const isValidVersion = semver.satisfies(pwyllInfo.version, `^${pckg.version}`);
+    if (!isValidVersion) {
+        throw new Error(`${pckg.name}@${pckg.version} ` +
+            'not compatible with server version for ' +
+            `${pwyllInfo.name}@${pwyllInfo.version}` +
+            ' try to update the client: $ npm isntall -g pwyll-cli');
+    }
+}
+
