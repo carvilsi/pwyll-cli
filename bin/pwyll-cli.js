@@ -5,6 +5,7 @@ import { Command } from 'commander';
 import { signUpPrompt } from './../src/signUp.js';
 import { add } from './../src/addSnippet.js';
 import { search } from './../src/searchSnippet.js';
+import { exports } from './../src/exportSnippets.js';
 import fs from 'fs';
 import * as url from 'url';
 import path from 'node:path';
@@ -70,6 +71,24 @@ program
     .description('deletes a snippet for the current signed up user')
     .action(() => {
         search({ del: true });
+    });
+
+program
+    .command('e')
+    .alias('export')
+    .description('exports all the signed in user snippets to json file')
+    .argument('<file>', 'export file path')
+    .action((file) => {
+        exports(file);
+    });
+
+program
+    .command('i')
+    .alias('import')
+    .description('imports the snippets from a json file for the signed in user')
+    .argument('<file>', 'file path to import')
+    .action((file) => {
+        imports(file);
     });
 
 program.parse();
