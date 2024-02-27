@@ -35,7 +35,7 @@ function callAndPrint(rl, query, config) {
                     const dscrptn = chalk.grey(snippets[i].description);
 
                     if (i === SELECTED_SNIPPET) {
-                        log(`-| ${dscrptn}\n-| ${snppt}`);
+                        log(`|=> ${dscrptn}\n|=> ${snppt}`);
                     } else {
                         log(`${dscrptn}\n${snppt}`);
                     }
