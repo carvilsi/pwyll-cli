@@ -103,7 +103,7 @@ export async function exportSnippetsPwyllCall(file, config) {
         responseType: 'stream',
     });
     response.data.on('data', (doc) => console.dir(doc));
-    //response.data.pipe(fs.createWriteStream(file));
+    response.data.pipe(fs.createWriteStream(file));
     //response.data.on('end', () => {
         //return;
     //});
