@@ -1,7 +1,7 @@
 import chalk from 'chalk';
-import { homedir } from 'os';
-import path from 'path';
-import fs from 'fs';
+import { homedir } from 'node:os';
+import path from 'node:path';
+import fs from 'node:fs';
 import semver from 'semver';
 import * as url from 'url';
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import fs from 'node:fs';
 import { errorHandler } from './util.js';
 
 // delete a snippet
@@ -94,3 +95,15 @@ export async function retrieveInfo(config) {
         }
     }
 }
+
+// exports the snippets for a user
+export async function exportSnippetsPwyllCall(file, config) {
+    const response = await axios({
+        method: 'GET',
+        url: `${config.pwyllUrl}/snippet/export`,
+        params: { userID: config.userID },
+        responseType: 'stream',
+    });
+    response.data.pipe(fs.createWriteStream(file));
+}
+
