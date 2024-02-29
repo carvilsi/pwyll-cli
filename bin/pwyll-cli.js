@@ -6,6 +6,7 @@ import { signUpPrompt } from './../src/signUp.js';
 import { add } from './../src/addSnippet.js';
 import { search } from './../src/searchSnippet.js';
 import { exports } from './../src/exportSnippets.js';
+import { imports } from './../src/importSnippets.js';
 import fs from 'fs';
 import * as url from 'url';
 import path from 'node:path';

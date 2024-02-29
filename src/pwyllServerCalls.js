@@ -96,6 +96,7 @@ export async function retrieveInfo(config) {
     }
 }
 
+// exports the snippets for a user
 export async function exportSnippetsPwyllCall(file, config) {
     const response = await axios({
         method: 'GET',
