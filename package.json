@@ -11,8 +11,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "pre-release": "npm audit && ./pre-release.sh",
     "release": "tag=$(node -e \"console.log(require('./package.json').version)\"); git tag v${tag}; git push origin v${tag} && npm publish",
-    "linter": "./node_modules/eslint/bin/eslint.js src/ --ext .js",
-    "linter-fix": "./node_modules/eslint/bin/eslint.js src/ --ext .js --fix"
+    "lint": "./node_modules/eslint/bin/eslint.js src/ --ext .js",
+    "lint-fix": "./node_modules/eslint/bin/eslint.js src/ --ext .js --fix"
   },
   "repository": {
     "type": "git",

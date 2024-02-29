@@ -98,14 +98,11 @@ export async function retrieveInfo(config) {
 
 export async function exportSnippetsPwyllCall(file, config) {
     const response = await axios({
-        method: 'get',
-        url: `${config.pwyllUrl}/snippet/export?userID=${config.userID}`,
+        method: 'GET',
+        url: `${config.pwyllUrl}/snippet/export`,
+        params: { userID: config.userID },
         responseType: 'stream',
     });
-    response.data.on('data', (doc) => console.dir(doc));
     response.data.pipe(fs.createWriteStream(file));
-    //response.data.on('end', () => {
-        //return;
-    //});
 }
 
