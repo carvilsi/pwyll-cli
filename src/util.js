@@ -17,6 +17,7 @@ const PACKAGE_JSON = './../package.json';
 // XXX: maybe replace these three functions with logmeplease
 export function errorHandler(errorMessage) {
     log(`[${chalk.red('ERROR')}] ${errorMessage}`);
+    throw new Error(errorMessage);
 }
 
 export function warningHandler(warningMessage) {

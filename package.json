@@ -8,11 +8,14 @@
     "pwyll-cli": "bin/pwyll-cli.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "./node_modules/mocha/bin/mocha.js tests/",
+    "coverage": "./node_modules/c8/bin/c8.js node src/*.js; ./node_modules/c8/bin/c8.js npm test",
     "pre-release": "npm audit && ./pre-release.sh",
     "release": "tag=$(node -e \"console.log(require('./package.json').version)\"); git tag v${tag}; git push origin v${tag} && npm publish",
     "lint": "./node_modules/eslint/bin/eslint.js src/ --ext .js",
-    "lint-fix": "./node_modules/eslint/bin/eslint.js src/ --ext .js --fix"
+    "lint-test": "./node_modules/eslint/bin/eslint.js tests/ --ext .js",
+    "lint-fix": "./node_modules/eslint/bin/eslint.js src/ --ext .js --fix",
+    "lint-test-fix": "./node_modules/eslint/bin/eslint.js tests/ --ext .js --fix"
   },
   "repository": {
     "type": "git",
@@ -37,6 +40,9 @@
     "semver": "^7.6.0"
   },
   "devDependencies": {
-    "eslint": "^8.56.0"
+    "c8": "^9.1.0",
+    "chai": "^5.1.0",
+    "eslint": "^8.56.0",
+    "mocha": "^10.3.0"
   }
 }
