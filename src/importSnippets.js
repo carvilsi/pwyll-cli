@@ -8,7 +8,7 @@ import { configReader,
     checkVersion } from './util.js';
 import { addSnippetPwyllCall } from './pwyllServerCalls.js';
 
-export async function imports(file) {
+export default async function importsToPwyll(file) {
     try {
         const config = configReader();
         await checkVersion(config);
@@ -18,19 +18,28 @@ export async function imports(file) {
         if (path.extname(file) !== '.json') {
             throw new Error(`The provided file ${file} has not json extension`);
         }
-        let snippets = 0;
-        const readStream = fs.createReadStream(file, 'utf8')
-            .pipe(JSONStream.parse('*'));
-        readStream.on('data', async(data) => {
-            const snippetObj = {
-                snippet: data.snippet,
-                description: data.description,
-            };
-            snippets++;
-            await addSnippetPwyllCall(snippetObj, config);
-        });
-        readStream.on('end', () => {
-            infoHandler(`imported a total of ${snippets} snippets into pwyll`);
+        return new Promise((resolve, reject) => { 
+            let snippets = 0;
+            const readStream = fs.createReadStream(file, 'utf8')
+                .pipe(JSONStream.parse('*'));
+            readStream.on('data', (data) => {
+                const snippetObj = {
+                    snippet: data.snippet,
+                    description: data.description,
+                };
+                snippets++;
+                console.log('here TADAN!');
+                addSnippetPwyllCall(snippetObj, config);
+                console.log('WTH');
+            });
+            readStream.on('end', () => {
+                console.log('THE stream ends');
+                infoHandler(`imported a total of ${snippets} snippets into pwyll`);
+                resolve();
+            });
+            readStream.on('error', (error) => {
+                reject(error);
+            });
         });
     } catch (err) {
         errorHandler(err.message);

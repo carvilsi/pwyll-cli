@@ -4,7 +4,8 @@
     "node_modules",
     "tests",
     "bin",
-    "src/userQuestions.js"
+    "src/userQuestions.js",
+    "src/searchSnippet.js"
   ],
   "include": ["src"]
 }

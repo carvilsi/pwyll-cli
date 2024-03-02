@@ -6,7 +6,7 @@ import { configReader,
     checkVersion } from './util.js';
 import { exportSnippetsPwyllCall } from './pwyllServerCalls.js';
 
-export async function exports(file) {
+export default async function exportsFromPwyll(file) {
     try {
         const config = configReader();
         await checkVersion(config);
@@ -15,6 +15,7 @@ export async function exports(file) {
         }
         await exportSnippetsPwyllCall(file, config);
         infoHandler(`snippets exporter to: ${file}`);
+        return;
     } catch (err) {
         errorHandler(err.message);
     }

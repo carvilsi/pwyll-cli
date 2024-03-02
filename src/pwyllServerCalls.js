@@ -18,6 +18,7 @@ export async function addSnippetPwyllCall(snippetObj, config) {
         userID: config.userID,
         secret: config.secret,
     });
+    console.log('----addSnippetPwyllCall---- ----');
     return response;
 }
 
@@ -97,13 +98,25 @@ export async function retrieveInfo(config) {
 }
 
 // exports the snippets for a user
-export async function exportSnippetsPwyllCall(file, config) {
-    const response = await axios({
-        method: 'GET',
-        url: `${config.pwyllUrl}/snippet/export`,
-        params: { userID: config.userID },
-        responseType: 'stream',
-    });
-    response.data.pipe(fs.createWriteStream(file));
+export function exportSnippetsPwyllCall(file, config) {
+   return new Promise((resolve, reject) => {
+        axios({
+            method: 'GET',
+            url: `${config.pwyllUrl}/snippet/export`,
+            params: { userID: config.userID },
+            responseType: 'stream',
+        }).then((response) => {
+            response.data
+                .pipe(fs.createWriteStream(file))
+                .on('finish', () => {
+                    resolve();
+                })
+                .on('error', (error) => {
+                    reject(error); 
+                });
+        }).catch((error) => {
+            reject(error);
+        });
+   });
 }
 

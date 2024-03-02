@@ -15,7 +15,7 @@ export async function addQuestion() {
             message: 'description:',
         }
     ];
-    return await prompts(questions, { onCancel:cyaAndExit });
+    return await prompts(questions, { onCancel: cyaAndExit });
 }
 
 export async function deleteQuestion() {
@@ -50,3 +50,30 @@ export async function updateQuestion() {
         return await prompts(questions, { onCancel: cleanup });
 }
 
+export async function sigupQuestion() {
+    const questions = [
+            {
+                type: 'text',
+                name: 'url',
+                message: 'pwyll url:',
+                initial: 'http://localhost:46520'
+            },
+            {
+                type: 'text',
+                name: 'username',
+                message: 'username:',
+            },
+            {
+                type: 'password',
+                name: 'secret',
+                message: 'type your secret:',
+            },
+            {
+                type: 'password',
+                name: 'repeatSecret',
+                message: 'type your secret again:',
+            }
+        ];
+
+        return await prompts(questions, { onCancel: cyaAndExit });
+}

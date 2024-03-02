@@ -5,9 +5,9 @@ import { Command } from 'commander';
 import { signUpPrompt } from './../src/signUp.js';
 import { add } from './../src/addSnippet.js';
 import { search } from './../src/searchSnippet.js';
-import { exports } from './../src/exportSnippets.js';
-import { imports } from './../src/importSnippets.js';
-import fs from 'fs';
+import exportsFromPwyll from './../src/exportSnippets.js';
+import importsToPwyll from './../src/importSnippets.js';
+import fs from 'node:fs';
 import * as url from 'url';
 import path from 'node:path';
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
@@ -80,7 +80,7 @@ program
     .description('exports all the signed in user snippets to json file')
     .argument('<file>', 'export file path')
     .action((file) => {
-        exports(file);
+        exportsFromPwyll(file);
     });
 
 program
@@ -89,7 +89,7 @@ program
     .description('imports the snippets from a json file for the signed in user')
     .argument('<file>', 'file path to import')
     .action((file) => {
-        imports(file);
+        importsToPwyll(file);
     });
 
 program.parse();
