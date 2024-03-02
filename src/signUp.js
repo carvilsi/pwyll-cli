@@ -1,8 +1,8 @@
 import prompts from 'prompts';
 
-import { errorHandler, 
-    configHandler, 
-    cyaAndExit, 
+import { errorHandler,
+    configHandler,
+    cyaAndExit,
     checkVersion } from './util.js';
 import { signUpPwyllCall } from './pwyllServerCalls.js';
 import { sigupQuestion } from './userQuestions.js';
@@ -24,6 +24,6 @@ export async function signUpPrompt(answers) {
         return userID;
     } catch (err) {
         errorHandler(err.message);
-    } 
+    }
 }
 

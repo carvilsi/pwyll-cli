@@ -11,11 +11,13 @@ const testGlobals = {
         description: 'dev mode nodemon typescript ts-node',
     },
     __SECOND_SNIPPET_OBJECT__: {
-      snippet: 'nodemon src/',
-      description: 'generic nodemon for source folder changes',
+        snippet: 'nodemon src/',
+        description: 'generic nodemon for source folder changes',
     },
     __EXPORT_FILE__: './tests/files/export-file.json',
     __IMPORT_FILE__: './tests/files/import-file.json',
+    __FAKE_IMPORT_FILE__: './tests/pwllClient.test.js',
+    __DOOMIE_IMPORT_FILE__: 'foo.bar',
 };
 
 export default testGlobals;

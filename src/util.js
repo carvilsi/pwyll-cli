@@ -46,7 +46,7 @@ export function configHandler(urlServer, username, userID, secret) {
             infoHandler(`user ${username} created, with ID: ${userID} on pwyll at ${urlServer}`);
             infoHandler(`data saved at ${CONFIG_FILE}`);
         } else {
-            errorHandler(`configuration file ${CONFIG_FILE} already exists, ` +
+            throw new Error(`configuration file ${CONFIG_FILE} already exists, ` +
                     'if you need to modify it, please remove it and try again');
         }
     } catch (err) {

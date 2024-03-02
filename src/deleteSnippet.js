@@ -17,18 +17,17 @@ export async function delSnippet(snippetObj, config, answers) {
     try {
         renderSnippet(snippetObj);
 
-        if (typeof answers === 'undefined') { 
+        if (typeof answers === 'undefined') {
             answers = await deleteQuestion();
         }
-        
+
         if (answers.value) {
             const response = await deleteSnippetPwyllCall(snippetObj, config);
             infoHandler(`snippet deleted with ID: ${snippetObj.id}`);
             return response.data;
-        } else {
-            cyaAndExit({ sentence: 'OK then,', username: config.username });
-            return false;
         }
+        cyaAndExit({ sentence: 'OK then,', username: config.username });
+        return false;
     } catch (err) {
         errorHandler(err.message);
     }

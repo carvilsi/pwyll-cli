@@ -130,7 +130,7 @@ export async function search({
 
         process.stdin.on('keypress', listener);
 
-        //XXX: check to refactor this
+        // XXX: check to refactor this
         rl.on('line', () => {
             searchSnippetPwyllCall(queryBuffer.join(''), config)
                 .then((snippets) => {

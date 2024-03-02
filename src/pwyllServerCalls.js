@@ -18,7 +18,6 @@ export async function addSnippetPwyllCall(snippetObj, config) {
         userID: config.userID,
         secret: config.secret,
     });
-    console.log('----addSnippetPwyllCall---- ----');
     return response;
 }
 
@@ -99,7 +98,7 @@ export async function retrieveInfo(config) {
 
 // exports the snippets for a user
 export function exportSnippetsPwyllCall(file, config) {
-   return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
         axios({
             method: 'GET',
             url: `${config.pwyllUrl}/snippet/export`,
@@ -112,11 +111,11 @@ export function exportSnippetsPwyllCall(file, config) {
                     resolve();
                 })
                 .on('error', (error) => {
-                    reject(error); 
+                    reject(error);
                 });
         }).catch((error) => {
             reject(error);
         });
-   });
+    });
 }
 

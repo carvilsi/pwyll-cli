@@ -10,8 +10,8 @@ export async function add(answers) {
     try {
         const config = configReader();
         await checkVersion(config);
-        if (typeof answers === 'undefined') { 
-            answers = await addQuestion(); 
+        if (typeof answers === 'undefined') {
+            answers = await addQuestion();
         }
         const snippetObj = {
             snippet: answers.snippet,
@@ -22,6 +22,6 @@ export async function add(answers) {
         return response;
     } catch (err) {
         errorHandler(err.message);
-    } 
+    }
 }
 
