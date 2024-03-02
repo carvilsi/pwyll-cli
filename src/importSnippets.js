@@ -20,26 +20,26 @@ export default async function importsToPwyll(file) {
         }
         return new Promise((resolve, reject) => { 
             let snippets = 0;
-            const readStream = fs.createReadStream(file, 'utf8')
-                .pipe(JSONStream.parse('*'));
-            readStream.on('data', (data) => {
-                const snippetObj = {
-                    snippet: data.snippet,
-                    description: data.description,
-                };
-                snippets++;
-                console.log('here TADAN!');
-                addSnippetPwyllCall(snippetObj, config);
-                console.log('WTH');
-            });
-            readStream.on('end', () => {
-                console.log('THE stream ends');
-                infoHandler(`imported a total of ${snippets} snippets into pwyll`);
-                resolve();
-            });
-            readStream.on('error', (error) => {
-                reject(error);
-            });
+            fs.createReadStream(file, 'utf8')
+                .pipe(JSONStream.parse('*'))
+                .on('data', async (data) => {
+                    const snippetObj = {
+                        snippet: data.snippet,
+                        description: data.description,
+                    };
+                    snippets++;
+                    console.log('here TADAN!');
+                    await addSnippetPwyllCall(snippetObj, config);
+                    console.log('WTH');
+                })
+                .on('end', () => {
+                    console.log('THE stream ends');
+                    infoHandler(`imported a total of ${snippets} snippets into pwyll`);
+                    resolve();
+                })
+                .on('error', (error) => {
+                    reject(error);
+                });
         });
     } catch (err) {
         errorHandler(err.message);
