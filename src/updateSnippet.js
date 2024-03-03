@@ -8,7 +8,7 @@ import { updateQuestion } from './userQuestions.js';
 export async function updateSnippet(snippetObj, config, answers) {
     try {
         if (typeof answers === 'undefined') {
-            answers = updateQuestion(snippetObj);
+            answers = await updateQuestion(snippetObj);
         }
         snippetObj.snippet = answers.snippet;
         snippetObj.description = answers.description;

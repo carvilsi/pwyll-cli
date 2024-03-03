@@ -39,6 +39,14 @@ describe('pwyll client', async() => {
         }).to.throw;
     });
 
+    it('should not signup a new user, since the user secret are different', async() => {
+        answersSignup.username = 'Sr. Frodo Baggins';
+        answersSignup.repeatSecret = 'ring';
+        expect(async() => {
+            await signUpPrompt(answersSignup);
+        }).to.throw;
+    });
+
     it('should read the config file', async() => {
         config = configReader();
 
