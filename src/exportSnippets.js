@@ -11,6 +11,7 @@ export default async function exportsFromPwyll(file) {
         const config = configReader();
         await checkVersion(config);
         if (fs.existsSync(file)) {
+            infoHandler(`The export file ${file} already exists`);
             throw new Error(`The export file ${file} already exists`);
         }
         await exportSnippetsPwyllCall(file, config);
