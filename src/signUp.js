@@ -1,8 +1,8 @@
-import prompts from 'prompts';
+/* eslint consistent-return: "off" */
+/* eslint no-param-reassign: "off" */
 
 import { errorHandler,
     configHandler,
-    cyaAndExit,
     checkVersion } from './util.js';
 import { signUpPwyllCall } from './pwyllServerCalls.js';
 import { sigupQuestion } from './userQuestions.js';

@@ -1,7 +1,9 @@
+/* eslint consistent-return: "off" */
+/* eslint no-param-reassign: "off" */
+
 import { configReader,
     errorHandler,
     infoHandler,
-    cyaAndExit,
     checkVersion } from './util.js';
 import { addSnippetPwyllCall } from './pwyllServerCalls.js';
 import { addQuestion } from './userQuestions.js';

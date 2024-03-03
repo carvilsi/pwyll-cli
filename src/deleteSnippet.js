@@ -1,10 +1,11 @@
-import prompts from 'prompts';
+/* eslint consistent-return: "off" */
+/* eslint no-param-reassign: "off" */
+
 import chalk from 'chalk';
 
 import { deleteSnippetPwyllCall } from './pwyllServerCalls.js';
 import { deleteQuestion } from './userQuestions.js';
 import { cyaAndExit,
-    cleanup,
     errorHandler,
     infoHandler } from './util.js';
 

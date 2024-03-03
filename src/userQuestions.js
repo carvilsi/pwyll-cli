@@ -31,7 +31,7 @@ export async function deleteQuestion() {
     return await prompts(questions, { onCancel: cleanup });
 }
 
-export async function updateQuestion() {
+export async function updateQuestion(snippetObj) {
     const questions = [
         {
             type: 'text',

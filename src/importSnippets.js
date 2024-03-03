@@ -1,3 +1,5 @@
+/* eslint consistent-return: "off" */
+
 import fs from 'node:fs';
 import JSONStream from 'JSONStream';
 import path from 'node:path';

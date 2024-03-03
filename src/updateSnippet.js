@@ -1,4 +1,5 @@
-import prompts from 'prompts';
+/* eslint consistent-return: "off" */
+/* eslint no-param-reassign: "off" */
 
 import { errorHandler, infoHandler } from './util.js';
 import { updateSnippetPwyllCall } from './pwyllServerCalls.js';
@@ -7,7 +8,7 @@ import { updateQuestion } from './userQuestions.js';
 export async function updateSnippet(snippetObj, config, answers) {
     try {
         if (typeof answers === 'undefined') {
-            answers = updateQuestion();
+            answers = updateQuestion(snippetObj);
         }
         snippetObj.snippet = answers.snippet;
         snippetObj.description = answers.description;
