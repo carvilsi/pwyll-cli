@@ -16,7 +16,9 @@ export default async function exportsFromPwyll(file) {
             infoHandler(`The export file ${file} already exists`);
             throw new Error(`The export file ${file} already exists`);
         }
+        console.log('In the name of lol 1');
         await exportSnippetsPwyllCall(file, config);
+        console.log('In the name of lol 2');
         infoHandler(`snippets exporter to: ${file}`);
         return;
     } catch (err) {

@@ -98,6 +98,9 @@ export async function retrieveInfo(config) {
 
 // exports the snippets for a user
 export function exportSnippetsPwyllCall(file, config) {
+    console.log('export call 0');
+    console.dir(file);
+    console.dir(config);
     return new Promise((resolve, reject) => {
         axios({
             method: 'GET',
@@ -105,15 +108,20 @@ export function exportSnippetsPwyllCall(file, config) {
             params: { userID: config.userID },
             responseType: 'stream',
         }).then((response) => {
+            console.log('export call 1');
             response.data
                 .pipe(fs.createWriteStream(file))
                 .on('finish', () => {
+                    
+                    console.log('finish');
                     resolve();
                 })
                 .on('error', (error) => {
+                    console.log('error!!!!!');
                     reject(error);
                 });
         }).catch((error) => {
+            console.log('the error promise');
             reject(error);
         });
     });
