@@ -1,3 +1,5 @@
+/* eslint no-console: "off" */
+
 import chalk from 'chalk';
 import { homedir } from 'node:os';
 import path from 'node:path';

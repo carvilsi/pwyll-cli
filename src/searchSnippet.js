@@ -1,3 +1,5 @@
+/* eslint no-console: "off" */
+
 import readline from 'node:readline';
 import chalk from 'chalk';
 import clipboardy from 'clipboardy';

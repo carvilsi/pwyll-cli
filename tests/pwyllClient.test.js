@@ -103,13 +103,9 @@ describe('pwyll client', async() => {
     });
 
     it('should export all the snippets for the user', async() => {
-        console.log(0);
         await exportsFromPwyll(testGlobals.__EXPORT_FILE__);
-        console.log(1);
         equal(fs.existsSync(testGlobals.__EXPORT_FILE__), true);
-        console.log(2);
         const snippets = JSON.parse(fs.readFileSync(testGlobals.__EXPORT_FILE__));
-        console.log(3);
         equal(snippets.length, 2);
         let i = 0;
         equal(snippets[i].snippet, testGlobals.__SECOND_SNIPPET_OBJECT__.snippet);

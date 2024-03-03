@@ -1,5 +1,6 @@
 /* eslint consistent-return: "off" */
 /* eslint no-param-reassign: "off" */
+/* eslint no-console: "off" */
 
 import chalk from 'chalk';
 

@@ -9,9 +9,10 @@
   },
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha.js tests/",
-    "test-ci-cd": "cd tests/; docker-compose up -d; cd -; sleep 20; npm test",
+    "test-ci-cd": "rm -f ~/.pwyll-cli/pwyll-config.json && rm -f tests/files/export-file.json; cd tests/; docker-compose up -d; cd -; sleep 20; npm test",
     "test-local": "docker ps | grep dev-mongo > /dev/null && rm -f ~/.pwyll-cli/pwyll-config.json && rm -f tests/files/export-file.json && ./node_modules/mocha/bin/mocha.js tests/",
     "coverage": "./node_modules/c8/bin/c8.js node src/*.js; ./node_modules/c8/bin/c8.js npm test",
+    "coverage-ci-cd": "./node_modules/c8/bin/c8.js node src/*.js; ./node_modules/c8/bin/c8.js npm run test-ci-cd",
     "coverage-local": "./node_modules/c8/bin/c8.js node src/*.js; ./node_modules/c8/bin/c8.js npm run test-local",
     "pre-release": "npm audit && ./pre-release.sh",
     "release": "tag=$(node -e \"console.log(require('./package.json').version)\"); git tag v${tag}; git push origin v${tag} && npm publish",
