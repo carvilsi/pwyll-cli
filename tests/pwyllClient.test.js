@@ -1,3 +1,5 @@
+/* eslint no-unused-expressions: "off" */
+
 import { assert, expect } from 'chai';
 import { equal } from 'assert';
 import { it, describe } from 'mocha';
@@ -14,9 +16,9 @@ import exportsFromPwyll from '../src/exportSnippets.js';
 import importsToPwyll from '../src/importSnippets.js';
 
 describe('pwyll client', async() => {
-    let snippetId;
-    let snippetSecondId;
-    let config;
+    let snippetId = null;
+    let snippetSecondId = null;
+    let config = null;
     const answersSignup = {
         url: testGlobals.__PYWLL_SERVER_URL__,
         username: testGlobals.__USER_NAME__,
