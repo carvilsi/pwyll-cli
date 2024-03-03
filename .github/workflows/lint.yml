@@ -2,7 +2,7 @@ name: Linter
 
 on:
   push:
-      branches: [ "develop" ]
+    branches: [ "develop" ]
   pull_request:
     branches: [ "main", "develop" ]
 
@@ -22,3 +22,5 @@ jobs:
         npm install
     - name: linter
       run: npm run lint
+    - name: linter tests
+      run: npm run lint-test
