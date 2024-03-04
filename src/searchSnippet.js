@@ -63,7 +63,7 @@ export async function search({
     del = false
 } = {}) {
     try {
-        const config = configReader();
+        const config = await configReader();
 
         await checkVersion(config);
 

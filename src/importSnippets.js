@@ -13,7 +13,7 @@ import { addSnippetPwyllCall } from './pwyllServerCalls.js';
 // TODO: re-think this...
 export default async function importsToPwyll(file) {
     try {
-        const config = configReader();
+        const config = await configReader();
         await checkVersion(config);
         if (!fs.existsSync(file)) {
             throw new Error(`The file ${file} to import does not exists`);

@@ -85,7 +85,7 @@
       "no-void": 1,
       // Produce warnings when something is commented as TODO or FIXME
       "no-warning-comments": [ 1, {
-          "terms": [ "TODO", "FIXME" ],
+          "terms": [ "TODO", "FIXME", "XXX" ],
           "location": "start"
       }],
       "no-with": 1,
