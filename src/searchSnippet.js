@@ -1,10 +1,12 @@
+/* eslint no-console: "off" */
+
 import readline from 'node:readline';
 import chalk from 'chalk';
 import clipboardy from 'clipboardy';
 
 import { searchSnippetPwyllCall } from './pwyllServerCalls.js';
-import { delSnippet } from './deleteSnippet.js';
-import { updateSnippet } from './updateSnippet.js';
+import delSnippet from './deleteSnippet.js';
+import updateSnippet from './updateSnippet.js';
 import { configReader,
     lineDiv,
     cyaAndExit,
@@ -130,6 +132,7 @@ export async function search({
 
         process.stdin.on('keypress', listener);
 
+        // XXX: check to refactor this
         rl.on('line', () => {
             searchSnippetPwyllCall(queryBuffer.join(''), config)
                 .then((snippets) => {

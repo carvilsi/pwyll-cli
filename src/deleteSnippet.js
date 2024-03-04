@@ -1,9 +1,12 @@
-import prompts from 'prompts';
+/* eslint consistent-return: "off" */
+/* eslint no-param-reassign: "off" */
+/* eslint no-console: "off" */
+
 import chalk from 'chalk';
 
 import { deleteSnippetPwyllCall } from './pwyllServerCalls.js';
+import { deleteQuestion } from './userQuestions.js';
 import { cyaAndExit,
-    cleanup,
     errorHandler,
     infoHandler } from './util.js';
 
@@ -12,30 +15,23 @@ function renderSnippet(snippetObj) {
                chalk.grey(snippetObj.description));
 }
 
-export async function delSnippet(snippetObj, config) {
+export default async function delSnippet(snippetObj, config, answers) {
     try {
         renderSnippet(snippetObj);
-        const questions = [
-            {
-                type: 'confirm',
-                name: 'value',
-                message: 'Do you want to delete this snippet?',
-                initial: true,
-            }
-        ];
 
-        const answers = await prompts(questions, { onCancel:cleanup });
-        if (answers.value) {
-            await deleteSnippetPwyllCall(snippetObj, config);
-            infoHandler(`snippet delted with ID: ${snippetObj.id}`);
-        } else {
-            cyaAndExit({ sentence: 'OK then,', username: config.username });
+        if (typeof answers === 'undefined') {
+            answers = await deleteQuestion();
         }
+
+        if (answers.value) {
+            const response = await deleteSnippetPwyllCall(snippetObj, config);
+            infoHandler(`snippet deleted with ID: ${snippetObj.id}`);
+            return response.data;
+        }
+        cyaAndExit({ sentence: 'OK then,', username: config.username });
+        return false;
     } catch (err) {
         errorHandler(err.message);
-    } finally {
-        process.exit();
     }
 }
-
 

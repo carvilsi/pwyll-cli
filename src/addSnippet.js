@@ -1,40 +1,29 @@
-import prompts from 'prompts';
+/* eslint consistent-return: "off" */
+/* eslint no-param-reassign: "off" */
 
 import { configReader,
     errorHandler,
     infoHandler,
-    cyaAndExit,
     checkVersion } from './util.js';
 import { addSnippetPwyllCall } from './pwyllServerCalls.js';
+import { addQuestion } from './userQuestions.js';
 
-export async function add() {
+export default async function add(answers) {
     try {
         const config = configReader();
         await checkVersion(config);
-        const questions = [
-            {
-                type: 'text',
-                name: 'snippet',
-                message: 'snippet:',
-            },
-            {
-                type: 'text',
-                name: 'description',
-                message: 'description:',
-            }
-        ];
-
-        const answers = await prompts(questions, { onCancel:cyaAndExit });
+        if (typeof answers === 'undefined') {
+            answers = await addQuestion();
+        }
         const snippetObj = {
             snippet: answers.snippet,
             description: answers.description,
         };
         const response = await addSnippetPwyllCall(snippetObj, config);
         infoHandler(`snippet saved with ID: ${response.data}`);
+        return response;
     } catch (err) {
         errorHandler(err.message);
-    } finally {
-        process.exit();
     }
 }
 

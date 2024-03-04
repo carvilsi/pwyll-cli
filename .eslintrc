@@ -73,6 +73,7 @@
       "no-param-reassign": 2,
       "no-process-env": 1,
       "no-proto": 2,
+      "no-console": 2,
       "no-redeclare": 2,
       "no-return-assign": 2,
       "no-script-url": 2,
