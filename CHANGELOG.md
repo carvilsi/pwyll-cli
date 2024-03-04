@@ -1,5 +1,10 @@
 # Changelog
 
+# [v3.0.0](https://github.com/carvilsi/pwyll-cli/releases/tag/v2.0.0) (2024-03-04)
+
+- added tests
+- added import and export feature
+
 # [v2.0.0](https://github.com/carvilsi/pwyll-cli/releases/tag/v2.0.0) (2024-02-20)
 
 - implemented secret for user 
