@@ -1,6 +1,12 @@
 # Changelog
 
-# [v3.0.0](https://github.com/carvilsi/pwyll-cli/releases/tag/v2.0.0) (2024-03-04)
+# [v3.1.0](https://github.com/carvilsi/pwyll-cli/releases/tag/v3.1.0) (2024-03-04)
+
+- adding colors configuration
+- asking to create a config file when does not exists 
+- fixing version comparision against server side
+
+# [v3.0.0](https://github.com/carvilsi/pwyll-cli/releases/tag/v3.0.0) (2024-03-04)
 
 - added tests
 - added import and export feature

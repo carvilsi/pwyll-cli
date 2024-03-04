@@ -3,12 +3,14 @@
 import chalk from 'chalk';
 import { homedir } from 'node:os';
 import path from 'node:path';
-import fs from 'node:fs';
+import * as fs from 'node:fs/promises';
+import { existsSync } from 'node:fs';
 import semver from 'semver';
 import * as url from 'url';
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 import { retrieveInfo } from './pwyllServerCalls.js';
+import signUpPrompt from './signUp.js';
 
 const log = console.log;
 
@@ -30,7 +32,14 @@ export function infoHandler(infoMessage) {
     log(`[${chalk.green('INFO')}] ${infoMessage}`);
 }
 
-export function configHandler(urlServer, username, userID, secret) {
+export function configFileExists() {
+    if (existsSync(CONFIG_FILE)) {
+        throw new Error(`configuration file ${CONFIG_FILE} already exists, ` +
+                    'if you need to modify it, please remove it and try again');
+    }
+}
+
+export async function configHandler(urlServer, username, userID, secret) {
     try {
         const config = {
             pwyllUrl: urlServer,
@@ -38,32 +47,31 @@ export function configHandler(urlServer, username, userID, secret) {
             userID: userID,
             secret: secret,
         };
-        if (!fs.existsSync(CONFIG_FOLDER)) {
-            fs.mkdirSync(CONFIG_FOLDER);
+        if (!existsSync(CONFIG_FOLDER)) {
+            await fs.mkdir(CONFIG_FOLDER);
         } else {
             warningHandler(`the configuration folder ${CONFIG_FOLDER} already exists`);
         }
-        if (!fs.existsSync(CONFIG_FILE)) {
-            fs.writeFileSync(CONFIG_FILE, JSON.stringify(config));
-            infoHandler(`user ${username} created, with ID: ${userID} on pwyll at ${urlServer}`);
-            infoHandler(`data saved at ${CONFIG_FILE}`);
-        } else {
-            throw new Error(`configuration file ${CONFIG_FILE} already exists, ` +
-                    'if you need to modify it, please remove it and try again');
-        }
+        configFileExists();
+        await fs.writeFile(CONFIG_FILE, JSON.stringify(config));
+        infoHandler(`user ${username} created, with ID: ${userID} on pwyll at ${urlServer}`);
+        infoHandler(`data saved at ${CONFIG_FILE}`);
+        return;
     } catch (err) {
         errorHandler(err.message);
     }
 }
 
-export function configReader() {
-    if (fs.existsSync(CONFIG_FILE)) {
-        const config = JSON.parse(fs.readFileSync(CONFIG_FILE));
+export async function configReader() {
+    if (existsSync(CONFIG_FILE)) {
+        const configFile = await fs.readFile(CONFIG_FILE);
+        const config = JSON.parse(configFile);
         return config;
     }
-    throw new Error(`the configuration file ${CONFIG_FILE} does not exists, ` +
-                    'create one with command \'$ ./bin/pwyll-cli.js signup ' +
-                    '<url> <username>\'');
+    warningHandler(`the configuration file ${CONFIG_FILE} does not exists, ` +
+                    'let\'s create one');
+    await signUpPrompt();
+    return await configReader();
 }
 
 export function lineDiv() {
@@ -73,7 +81,8 @@ export function lineDiv() {
 }
 
 export function cyaAndExit({ sentence = '', username = '' } = {}) {
-    log(chalk.white(`${sentence} ${username} cya!`.trim()) + chalk.grey(' :)'));
+    console.clear();
+    log(chalk.white(`${sentence} cya ${username}!`.trim()) + chalk.grey(' :)'));
     process.exit();
 }
 
@@ -81,10 +90,13 @@ export function cleanup() {
     console.clear();
 }
 
+// XXX: check this!
 export async function checkVersion(config) {
     const pwyllInfo = await retrieveInfo(config);
-    const pckg = JSON.parse(fs.readFileSync(path.join(__dirname, PACKAGE_JSON)));
-    const isValidVersion = semver.satisfies(pwyllInfo.version, `^${pckg.version}`);
+    const pckgFile = await fs.readFile(path.join(__dirname, PACKAGE_JSON));
+    const pckg = JSON.parse(pckgFile);
+    const major = semver.major(pckg.version);
+    const isValidVersion = semver.satisfies(pwyllInfo.version, `^${major}.x`);
     if (!isValidVersion) {
         throw new Error(`${pckg.name}@${pckg.version} ` +
             'not compatible with server version for ' +

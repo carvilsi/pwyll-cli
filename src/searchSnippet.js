@@ -1,20 +1,20 @@
 /* eslint no-console: "off" */
 
 import readline from 'node:readline';
-import chalk from 'chalk';
-import clipboardy from 'clipboardy';
 
 import { searchSnippetPwyllCall } from './pwyllServerCalls.js';
 import delSnippet from './deleteSnippet.js';
 import updateSnippet from './updateSnippet.js';
 import { configReader,
-    lineDiv,
     cyaAndExit,
     checkVersion,
     errorHandler } from './util.js';
+import { searchRender,
+    snippetsRender
+} from './clui.js';
 
 const log = console.log;
-let SELECTED_SNIPPET = 0;
+let selectedSnippet = 0;
 let snippetsLength = 0;
 
 function callAndPrint(rl, query, config) {
@@ -26,35 +26,8 @@ function callAndPrint(rl, query, config) {
             rl.prompt();
             rl.write(query);
             log('\n');
-
-            if (snippets.length) {
-                log(chalk.white(lineDiv()));
-                for (let i = 0; i < snippets.length; i++) {
-                    // we want the first little bit more bright since is the
-                    // one that will be selected when enter key will be pressed
-                    const snppt = i === SELECTED_SNIPPET ? chalk.whiteBright(snippets[i].snippet) :
-                        chalk.white(snippets[i].snippet);
-                    const dscrptn = chalk.grey(snippets[i].description);
-
-                    if (i === SELECTED_SNIPPET) {
-                        log(`|=> ${dscrptn}\n|=> ${snppt}`);
-                    } else {
-                        log(`${dscrptn}\n${snppt}`);
-                    }
-                    log(chalk.grey(lineDiv()));
-                    // XXX: it is possible to add the user that created the snippet
-                }
-            } else {
-                log(chalk.white('No results ') + chalk.grey(' -.-'));
-            }
+            snippetsRender(snippets, selectedSnippet, config);
         });
-}
-
-function searchRender(snippetObj) {
-    console.clear();
-    clipboardy.writeSync(snippetObj.snippet);
-    log(`${snippetObj.snippet}`);
-    process.exit();
 }
 
 export async function search({
@@ -63,7 +36,7 @@ export async function search({
     del = false
 } = {}) {
     try {
-        const config = configReader();
+        const config = await configReader();
 
         await checkVersion(config);
 
@@ -102,31 +75,35 @@ export async function search({
                 callAndPrint(rl, queryBuffer.join(''), config);
                 break;
             case 'down':
-                if (SELECTED_SNIPPET < snippetsLength - 1) {
-                    SELECTED_SNIPPET++;
+                if (selectedSnippet < snippetsLength - 1) {
+                    selectedSnippet++;
                 }
                 callAndPrint(rl, queryBuffer.join(''), config);
                 break;
             case 'up':
-                if (SELECTED_SNIPPET - 1 >= 0) {
-                    SELECTED_SNIPPET--;
+                if (selectedSnippet - 1 >= 0) {
+                    selectedSnippet--;
                 }
                 callAndPrint(rl, queryBuffer.join(''), config);
                 break;
             case 'right':
-                SELECTED_SNIPPET = snippetsLength - 1;
+                selectedSnippet = snippetsLength - 1;
                 callAndPrint(rl, queryBuffer.join(''), config);
                 break;
             case 'left':
-                SELECTED_SNIPPET = 0;
+                selectedSnippet = 0;
                 callAndPrint(rl, queryBuffer.join(''), config);
                 break;
             case 'return':
                 break;
             default:
-                SELECTED_SNIPPET = 0;
-                queryBuffer.push(key);
-                callAndPrint(rl, queryBuffer.join(''), config);
+                if (objk.name === 'c' && objk.ctrl) {
+                    cyaAndExit({ username: config.username });
+                } else {
+                    selectedSnippet = 0;
+                    queryBuffer.push(key);
+                    callAndPrint(rl, queryBuffer.join(''), config);
+                }
             }
         };
 
@@ -139,7 +116,7 @@ export async function search({
                     // Once the enter key was pressed we just take care about the first
                     // search snippet result.
                     if (snippets.length) {
-                        const snippetObj = snippets[SELECTED_SNIPPET];
+                        const snippetObj = snippets[selectedSnippet];
                         if (del) {
                             process.stdin.removeListener('keypress', listener);
                             rl.close();
@@ -149,7 +126,7 @@ export async function search({
                             rl.close();
                             updateSnippet(snippetObj, config);
                         } else {
-                            searchRender(snippetObj);
+                            searchRender(snippetObj, config);
                         }
                     }
                 });

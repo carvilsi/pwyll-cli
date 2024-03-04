@@ -48,7 +48,7 @@ describe('pwyll client', async() => {
     });
 
     it('should read the config file', async() => {
-        config = configReader();
+        config = await configReader();
 
         assert.containsAllKeys(config, [ 'userID', 'username', 'secret', 'pwyllUrl' ]);
     });

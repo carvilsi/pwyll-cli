@@ -3,12 +3,14 @@
 
 import { errorHandler,
     configHandler,
-    checkVersion } from './util.js';
+    checkVersion,
+    configFileExists } from './util.js';
 import { signUpPwyllCall } from './pwyllServerCalls.js';
 import { sigupQuestion } from './userQuestions.js';
 
 export default async function signUpPrompt(answers) {
     try {
+        configFileExists();
         if (typeof answers === 'undefined') {
             answers = await sigupQuestion();
         }
@@ -20,7 +22,7 @@ export default async function signUpPrompt(answers) {
             throw new Error('the provided passwords does not match, please repeat again');
         }
         const userID = await signUpPwyllCall(url, username, secret);
-        configHandler(url, username, userID, secret);
+        await configHandler(url, username, userID, secret);
         return userID;
     } catch (err) {
         errorHandler(err.message);
