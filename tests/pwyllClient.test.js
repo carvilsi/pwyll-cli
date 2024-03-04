@@ -6,11 +6,11 @@ import { it, describe } from 'mocha';
 import fs from 'node:fs';
 
 import testGlobals from './testGlobals.js';
-import { add } from '../src/addSnippet.js';
-import { delSnippet } from '../src/deleteSnippet.js';
-import { updateSnippet } from '../src/updateSnippet.js';
+import add from '../src/addSnippet.js';
+import delSnippet from '../src/deleteSnippet.js';
+import updateSnippet from '../src/updateSnippet.js';
 import { configReader } from '../src/util.js';
-import { signUpPrompt } from '../src/signUp.js';
+import signUpPrompt from '../src/signUp.js';
 import { searchSnippetPwyllCall } from '../src/pwyllServerCalls.js';
 import exportsFromPwyll from '../src/exportSnippets.js';
 import importsToPwyll from '../src/importSnippets.js';
@@ -123,6 +123,7 @@ describe('pwyll client', async() => {
         expect(async() => {
             await exportsFromPwyll(testGlobals.__EXPORT_FILE__);
         }).to.throw;
+        // TODO: check expec/throw not matching the error message...
     });
 
     it('should import a json file with snippets for user', async() => {
@@ -140,10 +141,6 @@ describe('pwyll client', async() => {
         } catch (err) {
             equal(err.message, `The file ${testGlobals.__DOOMIE_IMPORT_FILE__} to import does not exists`);
         }
-        // TODO: check why this is not working
-        // expect(async () => {
-        // await importsToPwyll(testGlobals.__DOOMIE_IMPORT_FILE__);
-        // }).to.throw(`The file ${testGlobals.__DOOMIE_IMPORT_FILE__} to import does not exists`);
     });
 
     it('should not import because the file is not a json', async() => {

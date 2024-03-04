@@ -5,7 +5,7 @@ import { errorHandler, infoHandler } from './util.js';
 import { updateSnippetPwyllCall } from './pwyllServerCalls.js';
 import { updateQuestion } from './userQuestions.js';
 
-export async function updateSnippet(snippetObj, config, answers) {
+export default async function updateSnippet(snippetObj, config, answers) {
     try {
         if (typeof answers === 'undefined') {
             answers = await updateQuestion(snippetObj);

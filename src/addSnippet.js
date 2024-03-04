@@ -8,7 +8,7 @@ import { configReader,
 import { addSnippetPwyllCall } from './pwyllServerCalls.js';
 import { addQuestion } from './userQuestions.js';
 
-export async function add(answers) {
+export default async function add(answers) {
     try {
         const config = configReader();
         await checkVersion(config);

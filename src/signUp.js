@@ -7,7 +7,7 @@ import { errorHandler,
 import { signUpPwyllCall } from './pwyllServerCalls.js';
 import { sigupQuestion } from './userQuestions.js';
 
-export async function signUpPrompt(answers) {
+export default async function signUpPrompt(answers) {
     try {
         if (typeof answers === 'undefined') {
             answers = await sigupQuestion();

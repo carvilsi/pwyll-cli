@@ -15,7 +15,7 @@ function renderSnippet(snippetObj) {
                chalk.grey(snippetObj.description));
 }
 
-export async function delSnippet(snippetObj, config, answers) {
+export default async function delSnippet(snippetObj, config, answers) {
     try {
         renderSnippet(snippetObj);
 
