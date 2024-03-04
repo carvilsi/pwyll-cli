@@ -44,6 +44,58 @@ Query snippets while typing.
 | `Arrow right` | selects last snippet                                                                        |
 | `Arrow left`  | selects first snippet                                                                       |
 | `Enter`       | copy selected snippet to clipboard and exit (paste it later with `ctrl+v` or `ctrl+shift+v` |
+| `ctrl-c`      | exit                                                                                        |
+
+## Configuration
+
+The configuration file, JSON format, is on the user home foler: 
+`$HOME/.pwyll-cli/pwyll-config.json`
+This file is generated when using `pwyll-cli signup`
+
+Example of basic configuration file:
+
+```json
+{
+  "pwyllUrl": "http://localhost:46520",
+  "username": "Frodo Baggins",
+  "userID": "00e5f795fff0ce4a10c06000",
+  "secret": "user test super secret"
+}
+```
+
+By default the cli has colors, you can disable them via config file, like: 
+
+```json
+{
+  "pwyllUrl": "http://localhost:46520",
+  "username": "Frodo Baggins",
+  "userID": "00e5f795fff0ce4a10c06000",
+  "secret": "user test super secret", 
+  "colors": { 
+    "enabled": false 
+  }
+}
+```
+
+Also it's possible to customize the colors, this is an example:
+
+```json
+{
+  "pwyllUrl": "http://localhost:46520",
+  "username": "Frodo Baggins",
+  "userID": "00e5f795fff0ce4a10c06000",
+  "secret": "user test super secret", 
+  "colors": { 
+    "enabled": true, 
+    "selectedSnippet": "yellowBright", 
+    "selectedDescription": "blueBright", 
+    "snippet": "yellow", 
+    "description": "blue" 
+  }
+}
+```
+
+The colors feature is based on [chalk](https://www.npmjs.com/package/chalk) there you can find all the supported colors.
 
 ---
 
