@@ -7,6 +7,8 @@
 
 # pwyll-cli
 
+The server side repo of [pwyll](https://github.com/carvilsi/pwyll) in case you want to install it.
+
 ## Install
 
 `$ npm install -g pwyll-cli`
