@@ -2,22 +2,19 @@
 /* eslint no-param-reassign: "off" */
 /* eslint no-console: "off" */
 
-import chalk from 'chalk';
-
 import { deleteSnippetPwyllCall } from './pwyllServerCalls.js';
 import { deleteQuestion } from './userQuestions.js';
 import { cyaAndExit,
     errorHandler,
     infoHandler } from './util.js';
-
-function renderSnippet(snippetObj) {
-    console.log(chalk.green(snippetObj.snippet) + chalk.grey(' | ') +
-               chalk.grey(snippetObj.description));
-}
+import { deleteSnippetRender } from './clui.js';
 
 export default async function delSnippet(snippetObj, config, answers) {
     try {
-        renderSnippet(snippetObj);
+        if (typeof answers === 'undefined') {
+            console.clear();
+        }
+        deleteSnippetRender(snippetObj, config);
 
         if (typeof answers === 'undefined') {
             answers = await deleteQuestion();

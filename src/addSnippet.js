@@ -10,7 +10,7 @@ import { addQuestion } from './userQuestions.js';
 
 export default async function add(answers) {
     try {
-        const config = configReader();
+        const config = await configReader();
         await checkVersion(config);
         if (typeof answers === 'undefined') {
             answers = await addQuestion();

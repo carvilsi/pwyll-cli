@@ -8,6 +8,9 @@ line="# [v${VERSION}](https:\/\/github.com\/carvilsi\/${NAME}\/releases\/tag\/v$
 last_release_date=$(head -n 3 CHANGELOG.md | tail -1 | awk '{ print $3 }' | sed 's/(\|)//g')
 commit_message=$(git log --after=${last_release_date} --format='- %s' | grep -v 'Merge' |  sed '{:q;N;s/\n//g;t q}')
 
+# TODO: retrieve the current pwyll server and update the docker-compose for testing
+
 sed -i '2s/^/\nnewchangelogentry\n/' $CHNGLG
+# FIXME: this is failing
 sed -i "s/newchangelogentry/${line}\n\n- ${commit_message}/g" $CHNGLG
 

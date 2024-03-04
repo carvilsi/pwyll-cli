@@ -8,7 +8,7 @@ import { exportSnippetsPwyllCall } from './pwyllServerCalls.js';
 
 export default async function exportsFromPwyll(file) {
     try {
-        const config = configReader();
+        const config = await configReader();
         await checkVersion(config);
         if (fs.existsSync(file)) {
             throw new Error(`The export file ${file} already exists`);
