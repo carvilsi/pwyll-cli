@@ -1,35 +1,17 @@
-import prompts from 'prompts';
+/* eslint consistent-return: "off" */
+/* eslint no-param-reassign: "off" */
 
-import { errorHandler, configHandler, cyaAndExit, checkVersion } from './util.js';
+import { errorHandler,
+    configHandler,
+    checkVersion } from './util.js';
 import { signUpPwyllCall } from './pwyllServerCalls.js';
+import { sigupQuestion } from './userQuestions.js';
 
-export async function signUpPrompt() {
+export default async function signUpPrompt(answers) {
     try {
-        const questions = [
-            {
-                type: 'text',
-                name: 'url',
-                message: 'pwyll url:',
-                initial: 'http://localhost:46520'
-            },
-            {
-                type: 'text',
-                name: 'username',
-                message: 'username:',
-            },
-            {
-                type: 'password',
-                name: 'secret',
-                message: 'type your secret:',
-            },
-            {
-                type: 'password',
-                name: 'repeatSecret',
-                message: 'type your secret again:',
-            }
-        ];
-
-        const answers = await prompts(questions, { onCancel:cyaAndExit });
+        if (typeof answers === 'undefined') {
+            answers = await sigupQuestion();
+        }
         const url = answers.url.trim();
         const secret = answers.secret.trim();
         const username = answers.username.trim();
@@ -39,10 +21,9 @@ export async function signUpPrompt() {
         }
         const userID = await signUpPwyllCall(url, username, secret);
         configHandler(url, username, userID, secret);
+        return userID;
     } catch (err) {
         errorHandler(err.message);
-    } finally {
-        process.exit();
     }
 }
 

@@ -1,7 +1,9 @@
+/* eslint no-console: "off" */
+
 import chalk from 'chalk';
-import { homedir } from 'os';
-import path from 'path';
-import fs from 'fs';
+import { homedir } from 'node:os';
+import path from 'node:path';
+import fs from 'node:fs';
 import semver from 'semver';
 import * as url from 'url';
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
@@ -17,6 +19,7 @@ const PACKAGE_JSON = './../package.json';
 // XXX: maybe replace these three functions with logmeplease
 export function errorHandler(errorMessage) {
     log(`[${chalk.red('ERROR')}] ${errorMessage}`);
+    throw new Error(errorMessage);
 }
 
 export function warningHandler(warningMessage) {
@@ -45,7 +48,7 @@ export function configHandler(urlServer, username, userID, secret) {
             infoHandler(`user ${username} created, with ID: ${userID} on pwyll at ${urlServer}`);
             infoHandler(`data saved at ${CONFIG_FILE}`);
         } else {
-            errorHandler(`configuration file ${CONFIG_FILE} already exists, ` +
+            throw new Error(`configuration file ${CONFIG_FILE} already exists, ` +
                     'if you need to modify it, please remove it and try again');
         }
     } catch (err) {

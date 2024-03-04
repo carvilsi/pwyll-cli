@@ -1,38 +1,26 @@
-import prompts from 'prompts';
+/* eslint consistent-return: "off" */
+/* eslint no-param-reassign: "off" */
 
-import { errorHandler, cleanup, infoHandler } from './util.js';
+import { errorHandler, infoHandler } from './util.js';
 import { updateSnippetPwyllCall } from './pwyllServerCalls.js';
+import { updateQuestion } from './userQuestions.js';
 
-export async function updateSnippet(snippetObj, config) {
+export default async function updateSnippet(snippetObj, config, answers) {
     try {
-        const questions = [
-            {
-                type: 'text',
-                name: 'snippet',
-                message: 'snippet:',
-                initial: snippetObj.snippet,
-            },
-            {
-                type: 'text',
-                name: 'description',
-                message: 'description:',
-                initial: snippetObj.description,
-            }
-        ];
-
-        const answers = await prompts(questions, { onCancel:cleanup });
+        if (typeof answers === 'undefined') {
+            answers = await updateQuestion(snippetObj);
+        }
         snippetObj.snippet = answers.snippet;
         snippetObj.description = answers.description;
         const response = await updateSnippetPwyllCall(snippetObj, config);
         if (response.data) {
             infoHandler(`snippet with ID: ${snippetObj.id} has been updated`);
-        } else {
-            throw new Error(`something went wrong when updating the snippet with ID: ${snippetObj.id}`);
+            return response.data;
+            // XXX: check this thing
         }
+        throw new Error(`something went wrong when updating the snippet with ID: ${snippetObj.id}`);
     } catch (err) {
         errorHandler(err.message);
-    } finally {
-        process.exit();
     }
 }
 
