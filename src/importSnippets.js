@@ -21,11 +21,11 @@ export default async function importsToPwyll(file) {
         if (path.extname(file) !== '.json') {
             throw new Error(`The provided file ${file} has not json extension`);
         }
-        return new Promise((resolve, reject) => {
+        return await new Promise((resolve, reject) => {
             let snippets = 0;
             fs.createReadStream(file, 'utf8')
                 .pipe(JSONStream.parse('*'))
-                .on('data', async(data) => {
+                .on('data', async (data) => {
                     const snippetObj = {
                         snippet: data.snippet,
                         description: data.description,
