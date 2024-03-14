@@ -1,5 +1,9 @@
 # Changelog
 
+# [v4.0.0](https://github.com/carvilsi/pwyll-cli/releases/tag/v4.0.0) (2024-03-14)
+
+- improving error messages without stacktrace when is not relevant
+
 # [v3.1.0](https://github.com/carvilsi/pwyll-cli/releases/tag/v3.1.0) (2024-03-04)
 
 - adding colors configuration
