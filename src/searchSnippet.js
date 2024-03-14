@@ -139,7 +139,7 @@ export async function search({
             cyaAndExit({ username: config.username });
         });
     } catch (error) {
-        errorHandler(error.message);
+        errorHandler(error);
         process.exit();
     }
 }

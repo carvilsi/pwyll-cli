@@ -20,7 +20,7 @@ export default async function updateSnippet(snippetObj, config, answers) {
         }
         throw new Error(`something went wrong when updating the snippet with ID: ${snippetObj.id}`);
     } catch (err) {
-        errorHandler(err.message);
+        errorHandler(err);
     }
 }
 

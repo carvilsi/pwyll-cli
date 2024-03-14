@@ -42,7 +42,7 @@ export default async function importsToPwyll(file) {
                 });
         });
     } catch (err) {
-        errorHandler(err.message);
+        errorHandler(err);
     }
 }
 

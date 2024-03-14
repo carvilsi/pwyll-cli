@@ -23,7 +23,7 @@ export default async function add(answers) {
         infoHandler(`snippet saved with ID: ${response.data}`);
         return response;
     } catch (err) {
-        errorHandler(err.message);
+        errorHandler(err);
     }
 }
 

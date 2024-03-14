@@ -76,7 +76,7 @@ export async function searchSnippetPwyllCall(query, config) {
         }
         return snippets;
     } catch (err) {
-        errorHandler(err.message);
+        errorHandler(err);
         return snippets;
     }
 }
