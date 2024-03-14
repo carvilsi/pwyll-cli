@@ -17,7 +17,7 @@ export default async function exportsFromPwyll(file) {
         infoHandler(`snippets exporter to: ${file}`);
         return;
     } catch (err) {
-        errorHandler(err.message);
+        errorHandler(err);
     }
 }
 

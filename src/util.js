@@ -18,10 +18,19 @@ const CONFIG_FOLDER = `${homedir}${path.sep}.pwyll-cli`;
 const CONFIG_FILE = `${CONFIG_FOLDER}${path.sep}pwyll-config.json`;
 const PACKAGE_JSON = './../package.json';
 
+export class VersionError extends Error {
+    constructor(m) {
+        super(m);
+        Object.setPrototypeOf(this, VersionError.prototype);
+    }
+}
+
 // XXX: maybe replace these three functions with logmeplease
-export function errorHandler(errorMessage) {
-    log(`[${chalk.red('ERROR')}] ${errorMessage}`);
-    throw new Error(errorMessage);
+export function errorHandler(error) {
+    log(`[${chalk.red('ERROR')}] ${error.message}`);
+    if (!(error instanceof VersionError)) {
+        throw error;
+    }
 }
 
 export function warningHandler(warningMessage) {
@@ -58,7 +67,7 @@ export async function configHandler(urlServer, username, userID, secret) {
         infoHandler(`data saved at ${CONFIG_FILE}`);
         return;
     } catch (err) {
-        errorHandler(err.message);
+        errorHandler(err);
     }
 }
 
@@ -90,7 +99,6 @@ export function cleanup() {
     console.clear();
 }
 
-// XXX: check this!
 export async function checkVersion(config) {
     const pwyllInfo = await retrieveInfo(config);
     const pckgFile = await fs.readFile(path.join(__dirname, PACKAGE_JSON));
@@ -98,7 +106,7 @@ export async function checkVersion(config) {
     const major = semver.major(pckg.version);
     const isValidVersion = semver.satisfies(pwyllInfo.version, `^${major}.x`);
     if (!isValidVersion) {
-        throw new Error(`${pckg.name}@${pckg.version} ` +
+        throw new VersionError(`${pckg.name}@${pckg.version} ` +
             'not compatible with server version for ' +
             `${pwyllInfo.name}@${pwyllInfo.version}` +
             ' try to update the client: $ npm isntall -g pwyll-cli');
