@@ -126,7 +126,7 @@ export async function search({
                             rl.close();
                             updateSnippet(snippetObj, config);
                         } else {
-                            searchRender(snippetObj, config);
+                            searchRender(snippetObj);
                         }
                     }
                 });

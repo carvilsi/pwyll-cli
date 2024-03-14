@@ -42,7 +42,7 @@ function colorizeRender(snippetObj, config, selected) {
     return `${descriptionRender}\n${snippetRender}`;
 }
 
-export function searchRender(snippetObj, config) {
+export function searchRender(snippetObj) {
     console.clear();
     clipboardy.writeSync(snippetObj.snippet);
     log(`${snippetObj.snippet}`);

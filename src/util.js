@@ -28,7 +28,9 @@ export class VersionError extends Error {
 // XXX: maybe replace these three functions with logmeplease
 export function errorHandler(error) {
     log(`[${chalk.red('ERROR')}] ${error.message}`);
-    if (!(error instanceof VersionError)) throw error;
+    if (!(error instanceof VersionError)) {
+        throw error;
+    }
 }
 
 export function warningHandler(warningMessage) {
