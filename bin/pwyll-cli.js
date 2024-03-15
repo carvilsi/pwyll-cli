@@ -1,6 +1,5 @@
 #! /usr/bin/env node
 
-
 import { Command } from 'commander';
 import  signUpPrompt  from './../src/signUp.js';
 import  add  from './../src/addSnippet.js';
