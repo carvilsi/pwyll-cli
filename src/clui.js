@@ -8,7 +8,7 @@ import { lineDiv } from './util.js';
 const log = console.log;
 const SELECT_SYMBOL = '|>';
 
-function colorizeRender(snippetObj, config, selected) {
+function colorizeRender(snippetObj, config, selected, searchAll) {
     let snippetRender = selected ? chalk.greenBright(snippetObj.snippet) :
         chalk.green(snippetObj.snippet);
     let descriptionRender = selected ? chalk.whiteBright(snippetObj.description) :
@@ -35,6 +35,9 @@ function colorizeRender(snippetObj, config, selected) {
                 chalk[config.colors.selectedDescription](snippetObj.description);
         }
     }
+    if (searchAll) {
+        descriptionRender = `[by ${snippetObj.username}] ${descriptionRender}`;
+    }
     if (selected) {
         return `${SELECT_SYMBOL} ${descriptionRender}\n` +
             `${SELECT_SYMBOL} ${snippetRender}`;
@@ -50,12 +53,11 @@ export function searchRender(snippetObj) {
     process.exit();
 }
 
-// XXX: it is possible to add the user that created the snippet
-export function snippetsRender(snippets, selectedSnippet, config) {
+export function snippetsRender(snippets, selectedSnippet, config, searchAll) {
     if (snippets.length) {
         log(chalk.white(lineDiv()));
         for (let i = 0; i < snippets.length; i++) {
-            log(colorizeRender(snippets[i], config, i === selectedSnippet));
+            log(colorizeRender(snippets[i], config, i === selectedSnippet, searchAll));
             log(chalk.grey(lineDiv()));
         }
     } else {
