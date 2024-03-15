@@ -25,7 +25,7 @@ export default async function signUpPrompt(answers) {
         await configHandler(url, username, userID, secret);
         return userID;
     } catch (err) {
-        errorHandler(err.message);
+        errorHandler(err);
     }
 }
 

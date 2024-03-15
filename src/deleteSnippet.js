@@ -28,7 +28,7 @@ export default async function delSnippet(snippetObj, config, answers) {
         cyaAndExit({ sentence: 'OK then,', username: config.username });
         return false;
     } catch (err) {
-        errorHandler(err.message);
+        errorHandler(err);
     }
 }
 

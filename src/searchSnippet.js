@@ -5,17 +5,20 @@ import readline from 'node:readline';
 import { searchSnippetPwyllCall } from './pwyllServerCalls.js';
 import delSnippet from './deleteSnippet.js';
 import updateSnippet from './updateSnippet.js';
-import { configReader,
+import {
+    configReader,
     cyaAndExit,
     checkVersion,
     errorHandler } from './util.js';
-import { searchRender,
+import {
+    searchRender,
     snippetsRender
 } from './clui.js';
 
 const log = console.log;
 let selectedSnippet = 0;
 let snippetsLength = 0;
+let all = false;
 
 function callAndPrint(rl, query, config) {
     searchSnippetPwyllCall(query, config)
@@ -26,7 +29,7 @@ function callAndPrint(rl, query, config) {
             rl.prompt();
             rl.write(query);
             log('\n');
-            snippetsRender(snippets, selectedSnippet, config);
+            snippetsRender(snippets, selectedSnippet, config, all);
         });
 }
 
@@ -42,11 +45,12 @@ export async function search({
 
         let promptString = `${config.username}:search@${config.pwyllUrl}>_ `;
 
+        all = searchAll;
         // if all is true we do not want the userID,
         // the backend will search snippets for any user.
         if (searchAll) {
             config.userID = null;
-            promptString = `anyone:search@${config.pwyllUrl}>_ `;
+            promptString = `anyone:search-all@${config.pwyllUrl}>_ `;
         }
         if (update) {
             promptString = `${config.username}:update@${config.pwyllUrl}>_ `;
@@ -126,7 +130,7 @@ export async function search({
                             rl.close();
                             updateSnippet(snippetObj, config);
                         } else {
-                            searchRender(snippetObj, config);
+                            searchRender(snippetObj);
                         }
                     }
                 });
@@ -139,7 +143,7 @@ export async function search({
             cyaAndExit({ username: config.username });
         });
     } catch (error) {
-        errorHandler(error.message);
+        errorHandler(error);
         process.exit();
     }
 }

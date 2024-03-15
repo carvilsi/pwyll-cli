@@ -22,27 +22,32 @@ export default async function importsToPwyll(file) {
             throw new Error(`The provided file ${file} has not json extension`);
         }
         return new Promise((resolve, reject) => {
-            let snippets = 0;
+            const snippets = [];
             fs.createReadStream(file, 'utf8')
                 .pipe(JSONStream.parse('*'))
-                .on('data', async(data) => {
+                .on('data', (data) => {
                     const snippetObj = {
                         snippet: data.snippet,
                         description: data.description,
                     };
-                    snippets++;
-                    await addSnippetPwyllCall(snippetObj, config);
+                    snippets.push(addSnippetPwyllCall(snippetObj, config));
                 })
                 .on('end', () => {
-                    infoHandler(`imported a total of ${snippets} snippets into pwyll`);
-                    resolve();
+                    Promise.all(snippets)
+                        .then(() => {
+                            infoHandler(`imported a total of ${snippets.length} snippets into pwyll`);
+                            return resolve();
+                        })
+                        .catch((error) => {
+                            return reject(error);
+                        });
                 })
                 .on('error', (error) => {
-                    reject(error);
+                    return reject(error);
                 });
         });
     } catch (err) {
-        errorHandler(err.message);
+        errorHandler(err);
     }
 }
 
