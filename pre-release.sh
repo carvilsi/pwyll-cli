@@ -14,8 +14,7 @@ current_vers_develop_server=$(curl -s https://raw.githubusercontent.com/carvilsi
 
 echo $current_ver_develop_server
 sed -i "s/pwyll:[0-9]*.[0-9]*.[0-9]*/pwyll:${current_vers_develop_server}/g" $TEST_DOCKER_COMPOSITION_FILE
-# TODO: retrieve the current pwyll server and update the docker-compose for testing
 
-#sed -i '2s/^/\nnewchangelogentry\n/' $CHNGLG
-#sed -i "s/newchangelogentry/${line}\n\n- ${commit_message}/g" $CHNGLG
+sed -i '2s/^/\nnewchangelogentry\n/' $CHNGLG
+sed -i "s/newchangelogentry/${line}\n\n- ${commit_message}/g" $CHNGLG
 
