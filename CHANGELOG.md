@@ -1,5 +1,10 @@
 # Changelog
 
+# [v4.1.2](https://github.com/carvilsi/pwyll-cli/releases/tag/v4.1.2) (2024-04-05)
+
+- added facetxt for fun
+- fixed bug when canceling a snippet update
+
 # [v4.1.1](https://github.com/carvilsi/pwyll-cli/releases/tag/v4.1.1) (2024-03-15)
 
 - shows user creator on search all mode
