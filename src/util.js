@@ -26,6 +26,13 @@ export class VersionError extends Error {
     }
 }
 
+export class InvalidUserError extends Error {
+    constructor(m) {
+        super(m);
+        Object.setPrototypeOf(this, InvalidUserError.prototype);
+    }
+}
+
 // XXX: maybe replace these three functions with logmeplease
 export function errorHandler(error) {
     log(`[${chalk.red('ERROR')}] ${error.message}`);
