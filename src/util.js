@@ -1,6 +1,7 @@
 /* eslint no-console: "off" */
 
 import chalk from 'chalk';
+import facetxt from 'facetxt';
 import { homedir } from 'node:os';
 import path from 'node:path';
 import * as fs from 'node:fs/promises';
@@ -91,7 +92,8 @@ export function lineDiv() {
 
 export function cyaAndExit({ sentence = '', username = '' } = {}) {
     console.clear();
-    log(chalk.white(`${sentence} cya ${username}!`.trim()) + chalk.grey(' :)'));
+    const smile = sentence.length > 0 ? facetxt.like('shrug') : facetxt.like('smile');
+    log(chalk.white(`${sentence} cya ${username}!`.trim()) + chalk.grey(` ${smile}`));
     process.exit();
 }
 
