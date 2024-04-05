@@ -47,7 +47,8 @@ export async function updateQuestion(snippetObj) {
         }
     ];
 
-    return await prompts(questions, { onCancel: cleanup });
+    // return await prompts(questions, { onCancel: cleanup });
+    return await prompts(questions);
 }
 
 export async function sigupQuestion() {
