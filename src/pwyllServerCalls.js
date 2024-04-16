@@ -1,6 +1,6 @@
 import axios from 'axios';
 import fs from 'node:fs';
-import { errorHandler } from './util.js';
+import { errorHandler, InvalidUserError, warningHandler } from './util.js';
 
 // delete a snippet
 export async function deleteSnippetPwyllCall(snippetObj, config) {
@@ -76,7 +76,13 @@ export async function searchSnippetPwyllCall(query, config) {
         }
         return snippets;
     } catch (err) {
-        errorHandler(err);
+        if (err.response?.data?.message === 'Invalid userID or secret') {
+            const userError = new InvalidUserError('Not valid user, please check configuration file');
+            warningHandler(userError);
+            process.exit();
+        } else {
+            errorHandler(err);
+        }
         return snippets;
     }
 }
