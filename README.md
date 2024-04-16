@@ -9,7 +9,7 @@
 
 <p align="center">
   <br>
-  <img src=".github/images/find-snippet.gif" width="600" alt="find snippet">
+  <img src=".github/images/search-snippet.gif" width="600" alt="find snippet">
   <br>
 </p>
 
@@ -42,6 +42,35 @@ The server side repo of [pwyll](https://github.com/carvilsi/pwyll) in case you w
     e|export <file>  exports all the signed in user snippets to json file
     i|import <file>  imports the snippets from a json file for the signed in user
     help [command]   display help for command
+
+<p align="center">
+New
+  <br>
+  <img src=".github/images/new-snippet.gif" width="600" alt="new snippet">
+  <br>
+</p>
+
+<p align="center">
+Search
+  <br>
+  <img src=".github/images/search-snippet.gif" width="600" alt="search snippet">
+  <br>
+</p>
+
+<p align="center">
+Update
+  <br>
+  <img src=".github/images/update-snippet.gif" width="600" alt="update snippet">
+  <br>
+</p>
+
+<p align="center">
+Delete
+  <br>
+  <img src=".github/images/delete-snippet.gif" width="600" alt="delete snippet">
+  <br>
+</p>
+
 
 ### Keys
 
