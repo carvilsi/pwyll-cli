@@ -1,5 +1,9 @@
 # Changelog
 
+# [v4.1.3](https://github.com/carvilsi/pwyll-cli/releases/tag/v4.1.3) (2024-04-16)
+
+- improved error for invalid user
+
 # [v4.1.2](https://github.com/carvilsi/pwyll-cli/releases/tag/v4.1.2) (2024-04-05)
 
 - added facetxt for fun
