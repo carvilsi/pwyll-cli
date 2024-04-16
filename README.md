@@ -9,7 +9,7 @@
 
 <p align="center">
   <br>
-  <img src=".github/images/search-snippet.gif" width="600" alt="find snippet">
+  <img src=".github/images/example.gif" width="600" alt="example snippet">
   <br>
 </p>
 
