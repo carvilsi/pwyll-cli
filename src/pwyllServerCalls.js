@@ -76,7 +76,6 @@ export async function searchSnippetPwyllCall(query, config) {
         }
         return snippets;
     } catch (err) {
-        //if (typeof error.response.data.message !== 'undefined') {
         if (err.response?.data?.message === 'Invalid userID or secret') {
             const userError = new InvalidUserError('Not valid user, please check configuration file');
             warningHandler(userError);
