@@ -2,7 +2,7 @@
   <img src="https://img.shields.io/github/actions/workflow/status/carvilsi/pwyll-cli/tests.yml?logo=github&label=tests" alt="test">
   <p></p>
   <p>
-    <img src="https://github.com/carvilsi/pwyll-cli/blob/main/img/pwyll-cli.png" alt="pwyll-cli" >
+    <img src=".github/imgages/pwyll-cli.png" alt="pwyll-cli" >
   </p>
   <p>the cli for the simple snippet manager service</p>
 </div>
