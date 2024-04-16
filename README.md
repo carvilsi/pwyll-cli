@@ -7,6 +7,12 @@
   <p>the cli for the simple snippet manager service</p>
 </div>
 
+<p align="center">
+  <br>
+  <img src=".github/images/find-snippet.gif" width="600" alt="find snippet">
+  <br>
+</p>
+
 # pwyll-cli
 
 The server side repo of [pwyll](https://github.com/carvilsi/pwyll) in case you want to install it.
