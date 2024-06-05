@@ -1,6 +1,10 @@
 import axios from 'axios';
 import fs from 'node:fs';
-import { errorHandler, InvalidUserError, warningHandler } from './util.js';
+import { errorHandler,
+    InvalidUserError,
+    warningHandler,
+    InvalidPasswordError
+} from './util.js';
 
 // delete a snippet
 export async function deleteSnippetPwyllCall(snippetObj, config) {
@@ -32,7 +36,12 @@ export async function signUpPwyllCall(pwyllUrl, username, secret) {
         return userID;
     } catch (error) {
         if (typeof error.response.data.message !== 'undefined') {
-            throw new Error(error.response.data.message);
+            if ((/does not meet the security policies/)
+                .test(error.response.data.message)) {
+                throw new InvalidPasswordError(error.response.data.message);
+            } else {
+                throw new Error(error.response.data.message);
+            }
         } else {
             throw error;
         }

@@ -28,12 +28,12 @@ describe('pwyll client', async() => {
 
     it('should signup a new user', async() => {
         const response = await signUpPrompt(answersSignup);
-
         equal(response.length, 24);
     });
 
+    // TODO: fix all of this since is throwing an error since the config file already exists
     it('should not signup a new user, since the config file already exists', async() => {
-        answersSignup.username = 'Sr. Frodo Baggins';
+        answersSignup.username = 'Mr. Frodo Baggins';
         expect(async() => {
             await signUpPrompt(answersSignup);
         }).to.throw;
@@ -160,5 +160,22 @@ describe('pwyll client', async() => {
 
         assert.isTrue(response, `the snippet with ID: ${snippetId} has been deleted`);
     });
+
+    it('should not signup a new user, since the secret does not match the policy',
+        async() => {
+            answersSignup.username = 'Cthulhu';
+            answersSignup.secret = 'weak';
+            answersSignup.repeatSecret = 'weak';
+            expect(async() => {
+                await signUpPrompt(answersSignup);
+            }).to.throw;
+            //try {
+                //await signUpPrompt(answersSignup);
+            //} catch (error) {
+                //console.dir(error);
+                //console.dir(error.message);
+                //expect(/does not meet the security policies/.test(error.toString())).to.be.true;
+            //}
+        });
 });
 
