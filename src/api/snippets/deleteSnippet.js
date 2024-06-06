@@ -2,12 +2,12 @@
 /* eslint no-param-reassign: "off" */
 /* eslint no-console: "off" */
 
-import { deleteSnippetPwyllCall } from './pwyllServerCalls.js';
-import { deleteQuestion } from './userQuestions.js';
-import { cyaAndExit,
-    errorHandler,
-    infoHandler } from './util.js';
-import { deleteSnippetRender } from './clui.js';
+import { deleteSnippetPwyllCall } from '../pwyllServerCalls.js';
+import { deleteQuestion } from '../../clui/userQuestions.js';
+import { errorHandler } from '../../handlers/errorHandler.js';
+import { infoHandler } from '../../handlers/infoHandler.js';
+import { cyaAndExit } from '../../clui/index.js';
+import { deleteSnippetRender } from '../../clui/index.js';
 
 export default async function delSnippet(snippetObj, config, answers) {
     try {

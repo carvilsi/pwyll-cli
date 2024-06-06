@@ -3,13 +3,15 @@
 
 import {
     errorHandler,
-    configHandler,
-    checkVersion,
-    configFileExists,
     InvalidPasswordError,
-} from './util.js';
+} from '../handlers/errorHandler.js';
 import { signUpPwyllCall } from './pwyllServerCalls.js';
-import { sigupQuestion } from './userQuestions.js';
+import { sigupQuestion } from '../clui/userQuestions.js';
+import {
+    configFileExists,
+    configHandler
+} from '../handlers/configHandler.js';
+import { checkVersion } from '../utils/index.js';
 
 export default async function signUpPrompt(answers) {
     try {

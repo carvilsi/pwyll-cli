@@ -4,11 +4,11 @@ import fs from 'node:fs';
 import JSONStream from 'JSONStream';
 import path from 'node:path';
 
-import { configReader,
-    errorHandler,
-    infoHandler,
-    checkVersion } from './util.js';
-import { addSnippetPwyllCall } from './pwyllServerCalls.js';
+import { addSnippetPwyllCall } from '../pwyllServerCalls.js';
+import { errorHandler } from '../../handlers/errorHandler.js';
+import { infoHandler } from '../../handlers/infoHandler.js';
+import { configReader } from '../../handlers/configHandler.js';
+import { checkVersion } from '../../utils/index.js';
 
 // TODO: re-think this...
 export default async function importsToPwyll(file) {

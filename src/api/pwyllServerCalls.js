@@ -1,10 +1,11 @@
 import axios from 'axios';
 import fs from 'node:fs';
-import { errorHandler,
+import { 
+    errorHandler,
     InvalidUserError,
-    warningHandler,
     InvalidPasswordError
-} from './util.js';
+} from '../handlers/errorHandler.js';
+import { warningHandler } from '../handlers/warningHandler.js';
 
 // delete a snippet
 export async function deleteSnippetPwyllCall(snippetObj, config) {

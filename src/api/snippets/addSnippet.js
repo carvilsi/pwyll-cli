@@ -1,12 +1,12 @@
 /* eslint consistent-return: "off" */
 /* eslint no-param-reassign: "off" */
 
-import { configReader,
-    errorHandler,
-    infoHandler,
-    checkVersion } from './util.js';
-import { addSnippetPwyllCall } from './pwyllServerCalls.js';
-import { addQuestion } from './userQuestions.js';
+import { checkVersion } from '../../utils/index.js';
+import { configReader } from '../../handlers/configHandler.js';
+import { addSnippetPwyllCall } from '../pwyllServerCalls.js';
+import { addQuestion } from '../../clui/userQuestions.js';
+import { infoHandler } from '../../handlers/infoHandler.js';
+import { errorHandler } from '../../handlers/errorHandler.js';
 
 export default async function add(answers) {
     try {
@@ -26,4 +26,3 @@ export default async function add(answers) {
         errorHandler(err);
     }
 }
-

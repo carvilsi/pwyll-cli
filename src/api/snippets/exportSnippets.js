@@ -1,10 +1,10 @@
 import fs from 'node:fs';
 
-import { configReader,
-    errorHandler,
-    infoHandler,
-    checkVersion } from './util.js';
-import { exportSnippetsPwyllCall } from './pwyllServerCalls.js';
+import { errorHandler } from '../../handlers/errorHandler.js';
+import { infoHandler } from '../../handlers/infoHandler.js';
+import { exportSnippetsPwyllCall } from '../pwyllServerCalls.js';
+import { configReader } from '../../handlers/configHandler.js';
+import { checkVersion } from '../../utils/index.js';
 
 export default async function exportsFromPwyll(file) {
     try {

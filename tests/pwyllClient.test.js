@@ -6,14 +6,14 @@ import { it, describe } from 'mocha';
 import fs from 'node:fs';
 
 import testGlobals from './testGlobals.js';
-import add from '../src/addSnippet.js';
-import delSnippet from '../src/deleteSnippet.js';
-import updateSnippet from '../src/updateSnippet.js';
-import { configReader, ConfigurationFileExistsError } from '../src/util.js';
-import signUpPrompt from '../src/signUp.js';
-import { searchSnippetPwyllCall } from '../src/pwyllServerCalls.js';
-import exportsFromPwyll from '../src/exportSnippets.js';
-import importsToPwyll from '../src/importSnippets.js';
+import add from '../src/api/snippets/addSnippet.js';
+import delSnippet from '../src/api/snippets/deleteSnippet.js';
+import updateSnippet from '../src/api/snippets/updateSnippet.js';
+import signUpPrompt from '../src/api/signUp.js';
+import { searchSnippetPwyllCall } from '../src/api/pwyllServerCalls.js';
+import exportsFromPwyll from '../src/api/snippets/exportSnippets.js';
+import importsToPwyll from '../src/api/snippets/importSnippets.js';
+import { configReader } from '../src/handlers/configHandler.js';
 
 describe('pwyll client', async() => {
     let snippetId = null;
