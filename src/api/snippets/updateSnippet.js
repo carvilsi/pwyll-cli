@@ -1,9 +1,11 @@
 /* eslint consistent-return: "off" */
 /* eslint no-param-reassign: "off" */
 
-import { errorHandler, infoHandler, cyaAndExit } from './util.js';
-import { updateSnippetPwyllCall } from './pwyllServerCalls.js';
-import { updateQuestion } from './userQuestions.js';
+import { errorHandler } from '../../handlers/errorHandler.js';
+import { infoHandler } from '../../handlers/infoHandler.js';
+import { cyaAndExit } from '../../clui/index.js';
+import { updateSnippetPwyllCall } from '../pwyllServerCalls.js';
+import { updateQuestion } from '../../clui/userQuestions.js';
 
 export default async function updateSnippet(snippetObj, config, answers) {
     try {
@@ -24,7 +26,8 @@ export default async function updateSnippet(snippetObj, config, answers) {
             infoHandler(`snippet with ID: ${snippetObj.id} has been updated`);
             return response.data;
         }
-        throw new Error(`something went wrong when updating the snippet with ID: ${snippetObj.id}`);
+        throw new Error(
+            `something went wrong when updating the snippet with ID: ${snippetObj.id}`);
     } catch (err) {
         errorHandler(err);
     }

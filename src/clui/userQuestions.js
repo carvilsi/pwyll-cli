@@ -1,6 +1,6 @@
 import prompts from 'prompts';
 
-import { cyaAndExit, cleanup } from './util.js';
+import { cyaAndExit, cleanup } from '../clui/index.js';
 
 export async function addQuestion() {
     const questions = [

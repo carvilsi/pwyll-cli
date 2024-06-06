@@ -1,12 +1,27 @@
 /* eslint no-console: "off" */
-
 import chalk from 'chalk';
 import clipboardy from 'clipboardy';
-
-import { lineDiv } from './util.js';
+import facetxt from 'facetxt';
 
 const log = console.log;
 const SELECT_SYMBOL = '|>';
+
+export function lineDiv() {
+    const col = process.stdout.columns;
+    const str = '-'.repeat(col);
+    return str;
+}
+
+export function cyaAndExit({ sentence = '', username = '' } = {}) {
+    console.clear();
+    const smile = sentence.length > 0 ? facetxt.like('shrug') : facetxt.like('smile');
+    log(chalk.white(`${sentence} cya ${username}!`.trim()) + chalk.grey(` ${smile}`));
+    process.exit();
+}
+
+export function cleanup() {
+    console.clear();
+}
 
 function colorizeRender(snippetObj, config, selected, searchAll) {
     let snippetRender = selected ? chalk.greenBright(snippetObj.snippet) :
