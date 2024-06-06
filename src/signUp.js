@@ -1,10 +1,13 @@
 /* eslint consistent-return: "off" */
 /* eslint no-param-reassign: "off" */
 
-import { errorHandler,
+import {
+    errorHandler,
     configHandler,
     checkVersion,
-    configFileExists } from './util.js';
+    configFileExists,
+    InvalidPasswordError,
+} from './util.js';
 import { signUpPwyllCall } from './pwyllServerCalls.js';
 import { sigupQuestion } from './userQuestions.js';
 
@@ -19,7 +22,8 @@ export default async function signUpPrompt(answers) {
         const username = answers.username.trim();
         await checkVersion({ pwyllUrl: url });
         if (secret !== answers.repeatSecret.trim()) {
-            throw new Error('the provided passwords does not match, please repeat again');
+            throw new InvalidPasswordError(
+                'The provided secrets does not match, please repeat again');
         }
         const userID = await signUpPwyllCall(url, username, secret);
         await configHandler(url, username, userID, secret);

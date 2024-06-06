@@ -33,10 +33,26 @@ export class InvalidUserError extends Error {
     }
 }
 
+export class InvalidPasswordError extends Error {
+    constructor(m) {
+        super(m);
+        Object.setPrototypeOf(this, InvalidPasswordError.prototype);
+    }
+}
+
+export class ConfigurationFileExistsError extends Error {
+    constructor(m) {
+        super(m);
+        Object.setPrototypeOf(this, ConfigurationFileExistsError.prototype);
+    }
+}
+
 // XXX: maybe replace these three functions with logmeplease
 export function errorHandler(error) {
     log(`[${chalk.red('ERROR')}] ${error.message}`);
-    if (!(error instanceof VersionError)) {
+    if (!(error instanceof VersionError) &&
+        !(error instanceof InvalidPasswordError) &&
+        !(error instanceof ConfigurationFileExistsError)) {
         throw error;
     }
 }
@@ -51,7 +67,7 @@ export function infoHandler(infoMessage) {
 
 export function configFileExists() {
     if (existsSync(CONFIG_FILE)) {
-        throw new Error(`configuration file ${CONFIG_FILE} already exists, ` +
+        throw new ConfigurationFileExistsError(`configuration file ${CONFIG_FILE} already exists, ` +
                     'if you need to modify it, please remove it and try again');
     }
 }
