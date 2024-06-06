@@ -9,7 +9,7 @@ import { configReader } from '../../handlers/configHandler.js';
 import { cyaAndExit } from '../../clui/index.js';
 import { checkVersion } from '../..//utils/index.js';
 import { errorHandler } from '../../handlers/errorHandler.js';
-import { 
+import {
     searchRender,
     snippetsRender
 } from '../../clui/index.js';

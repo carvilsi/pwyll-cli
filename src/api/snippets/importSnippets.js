@@ -5,7 +5,10 @@ import JSONStream from 'JSONStream';
 import path from 'node:path';
 
 import { addSnippetPwyllCall } from '../pwyllServerCalls.js';
-import { errorHandler } from '../../handlers/errorHandler.js';
+import {
+    errorHandler,
+    PwyllCLIError,
+} from '../../handlers/errorHandler.js';
 import { infoHandler } from '../../handlers/infoHandler.js';
 import { configReader } from '../../handlers/configHandler.js';
 import { checkVersion } from '../../utils/index.js';
@@ -15,11 +18,13 @@ export default async function importsToPwyll(file) {
     try {
         const config = await configReader();
         await checkVersion(config);
-        if (!fs.existsSync(file)) {
-            throw new Error(`The file ${file} to import does not exists`);
-        }
         if (path.extname(file) !== '.json') {
-            throw new Error(`The provided file ${file} has not json extension`);
+            throw new PwyllCLIError(
+                `The provided file ${file} has not json extension`);
+        }
+        if (!fs.existsSync(file)) {
+            throw new PwyllCLIError(
+                `The file ${file} to import does not exists`);
         }
         return new Promise((resolve, reject) => {
             const snippets = [];
@@ -35,7 +40,9 @@ export default async function importsToPwyll(file) {
                 .on('end', () => {
                     Promise.all(snippets)
                         .then(() => {
-                            infoHandler(`imported a total of ${snippets.length} snippets into pwyll`);
+                            infoHandler('imported a total of ' +
+                                `${snippets.length}` +
+                                ' snippets into pwyll');
                             return resolve();
                         })
                         .catch((error) => {
@@ -47,7 +54,7 @@ export default async function importsToPwyll(file) {
                 });
         });
     } catch (err) {
-        errorHandler(err);
+        return errorHandler(err);
     }
 }
 

@@ -1,7 +1,7 @@
+/* eslint no-console: "off" */
+
 import chalk from 'chalk';
 
-const log = console.log;
-
 export function warningHandler(warningMessage) {
-    log(`[${chalk.yellow('WARN')}] ${warningMessage}`);
+    console.log(`[${chalk.yellow('WARN')}] ${warningMessage}`);
 }

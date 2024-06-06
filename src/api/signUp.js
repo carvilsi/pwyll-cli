@@ -3,7 +3,7 @@
 
 import {
     errorHandler,
-    InvalidPasswordError,
+    PwyllCLIError,
 } from '../handlers/errorHandler.js';
 import { signUpPwyllCall } from './pwyllServerCalls.js';
 import { sigupQuestion } from '../clui/userQuestions.js';
@@ -24,14 +24,14 @@ export default async function signUpPrompt(answers) {
         const username = answers.username.trim();
         await checkVersion({ pwyllUrl: url });
         if (secret !== answers.repeatSecret.trim()) {
-            throw new InvalidPasswordError(
+            throw new PwyllCLIError(
                 'The provided secrets does not match, please repeat again');
         }
         const userID = await signUpPwyllCall(url, username, secret);
         await configHandler(url, username, userID, secret);
         return userID;
     } catch (err) {
-        errorHandler(err);
+        return errorHandler(err);
     }
 }
 

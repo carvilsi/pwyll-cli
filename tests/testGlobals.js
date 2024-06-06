@@ -17,7 +17,8 @@ const testGlobals = {
     __EXPORT_FILE__: './tests/files/export-file.json',
     __IMPORT_FILE__: './tests/files/import-file.json',
     __FAKE_IMPORT_FILE__: './tests/pwllClient.test.js',
-    __DOOMIE_IMPORT_FILE__: 'foo.bar',
+    __DOOMIE_IMPORT_FILE__: 'foo.json',
+    __DOOMIE_IMPORT_FILE_NO_JSON_EXTENSION__: 'foo.bar',
 };
 
 export default testGlobals;

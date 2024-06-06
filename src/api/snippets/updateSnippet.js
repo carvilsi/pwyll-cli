@@ -26,7 +26,8 @@ export default async function updateSnippet(snippetObj, config, answers) {
             infoHandler(`snippet with ID: ${snippetObj.id} has been updated`);
             return response.data;
         }
-        throw new Error(`something went wrong when updating the snippet with ID: ${snippetObj.id}`);
+        throw new Error(
+            `something went wrong when updating the snippet with ID: ${snippetObj.id}`);
     } catch (err) {
         errorHandler(err);
     }
