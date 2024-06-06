@@ -6,14 +6,14 @@ import { it, describe } from 'mocha';
 import fs from 'node:fs';
 
 import testGlobals from './testGlobals.js';
-import add from '../src/addSnippet.js';
-import delSnippet from '../src/deleteSnippet.js';
-import updateSnippet from '../src/updateSnippet.js';
-import { configReader } from '../src/util.js';
-import signUpPrompt from '../src/signUp.js';
-import { searchSnippetPwyllCall } from '../src/pwyllServerCalls.js';
-import exportsFromPwyll from '../src/exportSnippets.js';
-import importsToPwyll from '../src/importSnippets.js';
+import add from '../src/api/snippets/addSnippet.js';
+import delSnippet from '../src/api/snippets/deleteSnippet.js';
+import updateSnippet from '../src/api/snippets/updateSnippet.js';
+import signUpPrompt from '../src/api/signUp.js';
+import { searchSnippetPwyllCall } from '../src/api/pwyllServerCalls.js';
+import exportsFromPwyll from '../src/api/snippets/exportSnippets.js';
+import importsToPwyll from '../src/api/snippets/importSnippets.js';
+import { configReader } from '../src/handlers/configHandler.js';
 
 describe('pwyll client', async() => {
     let snippetId = null;
@@ -26,37 +26,37 @@ describe('pwyll client', async() => {
         repeatSecret: testGlobals.__USER_SECRET__,
     };
 
-    it('should signup a new user', async() => {
-        const response = await signUpPrompt(answersSignup);
+    it('should not signup a new user, since the user secret are different', async() => {
+        answersSignup.secret = 'foo';
+        answersSignup.repeatSecret = 'bar';
+        const res = await signUpPrompt(answersSignup);
+        equal(res, 'The provided secrets does not match, please repeat again');
+    });
 
+    it('should not signup a new user, since the secret does not match the policy',
+        async() => {
+        answersSignup.secret = 'weak';
+        answersSignup.repeatSecret = 'weak';
+        const res = await signUpPrompt(answersSignup);
+        expect((/does not meet the security policies/).test(res)).to.be.true;
+        });
+
+    it('should signup a new user', async() => {
+        answersSignup.secret = testGlobals.__USER_SECRET__;
+        answersSignup.repeatSecret = testGlobals.__USER_SECRET__;
+        const response = await signUpPrompt(answersSignup);
         equal(response.length, 24);
     });
 
     it('should not signup a new user, since the config file already exists', async() => {
-        answersSignup.username = 'Sr. Frodo Baggins';
-        expect(async() => {
-            await signUpPrompt(answersSignup);
-        }).to.throw;
-    });
-
-    it('should not signup a new user, since the user secret are different', async() => {
-        answersSignup.username = 'Sr. Frodo Baggins';
-        answersSignup.repeatSecret = 'ring';
-        expect(async() => {
-            await signUpPrompt(answersSignup);
-        }).to.throw;
+        answersSignup.username = 'Mr. Frodo Baggins';
+        const res = await signUpPrompt(answersSignup);
+        expect((/already exists/).test(res)).to.be.true;
     });
 
     it('should read the config file', async() => {
         config = await configReader();
-
         assert.containsAllKeys(config, [ 'userID', 'username', 'secret', 'pwyllUrl' ]);
-    });
-
-    it('should not signup a user, since config file already exists', async() => {
-        expect(async() => {
-            await signUpPrompt(answersSignup);
-        }).to.throw;
     });
 
     it('should add new snippet', async() => {
@@ -86,8 +86,10 @@ describe('pwyll client', async() => {
 
     it('should find the snippet', async() => {
         const snippets = await searchSnippetPwyllCall('nodemon', config);
-        equal(snippets[0].snippet, testGlobals.__SECOND_SNIPPET_OBJECT__.snippet);
-        equal(snippets[0].description, testGlobals.__SECOND_SNIPPET_OBJECT__.description);
+        equal(snippets[0].snippet, 
+            testGlobals.__SECOND_SNIPPET_OBJECT__.snippet);
+        equal(snippets[0].description, 
+            testGlobals.__SECOND_SNIPPET_OBJECT__.description);
         equal(snippets[0].username, testGlobals.__USER_NAME__);
         equal(snippets[0].id, snippetId);
     });
@@ -105,11 +107,14 @@ describe('pwyll client', async() => {
     it('should export all the snippets for the user', async() => {
         await exportsFromPwyll(testGlobals.__EXPORT_FILE__);
         equal(fs.existsSync(testGlobals.__EXPORT_FILE__), true);
-        const snippets = JSON.parse(fs.readFileSync(testGlobals.__EXPORT_FILE__));
+        const snippets = 
+            JSON.parse(fs.readFileSync(testGlobals.__EXPORT_FILE__));
         equal(snippets.length, 2);
         let i = 0;
-        equal(snippets[i].snippet, testGlobals.__SECOND_SNIPPET_OBJECT__.snippet);
-        equal(snippets[i].description, testGlobals.__SECOND_SNIPPET_OBJECT__.description);
+        equal(snippets[i].snippet, 
+            testGlobals.__SECOND_SNIPPET_OBJECT__.snippet);
+        equal(snippets[i].description, 
+            testGlobals.__SECOND_SNIPPET_OBJECT__.description);
         equal(snippets[i].user.username, testGlobals.__USER_NAME__);
         equal(snippets[i]._id, snippetId);
         i++;
@@ -119,16 +124,17 @@ describe('pwyll client', async() => {
         equal(snippets[i]._id, snippetSecondId);
     });
 
-    it('should fail when export since the export file already exists', async() => {
-        expect(async() => {
-            await exportsFromPwyll(testGlobals.__EXPORT_FILE__);
-        }).to.throw;
-        // TODO: check expec/throw not matching the error message...
+    it('should fail when export since the export file already exists', 
+        async() => {
+        const res = await exportsFromPwyll(testGlobals.__EXPORT_FILE__);
+        equal(res, 
+            `The export file ${testGlobals.__EXPORT_FILE__} already exists`);
     });
 
     it('should import a json file with snippets for user', async() => {
         await importsToPwyll(testGlobals.__IMPORT_FILE__);
-        const snippetsImported = JSON.parse(fs.readFileSync(testGlobals.__IMPORT_FILE__));
+        const snippetsImported = 
+            JSON.parse(fs.readFileSync(testGlobals.__IMPORT_FILE__));
         const snippets = await searchSnippetPwyllCall('exa', config);
         equal(snippets[0].snippet, snippetsImported[1].snippet);
         equal(snippets[0].description, snippetsImported[1].description);
@@ -136,17 +142,19 @@ describe('pwyll client', async() => {
     });
 
     it('should not import because the file does not exists', async() => {
-        try {
-            await importsToPwyll(testGlobals.__DOOMIE_IMPORT_FILE__);
-        } catch (err) {
-            equal(err.message, `The file ${testGlobals.__DOOMIE_IMPORT_FILE__} to import does not exists`);
-        }
+        const res = await importsToPwyll(testGlobals.__DOOMIE_IMPORT_FILE__);
+        equal(res, 'The file ' + 
+            `${testGlobals.__DOOMIE_IMPORT_FILE__}` + 
+            ' to import does not exists');
     });
 
     it('should not import because the file is not a json', async() => {
-        expect(async() => {
-            await importsToPwyll(testGlobals.__FAKE_IMPORT_FILE__);
-        }).to.throw;
+        const res = await importsToPwyll(
+            testGlobals.__DOOMIE_IMPORT_FILE_NO_JSON_EXTENSION__);
+        equal(res, 
+            'The provided file ' + 
+            `${testGlobals.__DOOMIE_IMPORT_FILE_NO_JSON_EXTENSION__}` + 
+            ' has not json extension');
     });
 
     it('should delete a snippet', async() => {
@@ -158,7 +166,8 @@ describe('pwyll client', async() => {
         const answers = { value: true };
         const response = await delSnippet(snippetObj, config, answers);
 
-        assert.isTrue(response, `the snippet with ID: ${snippetId} has been deleted`);
+        assert.isTrue(response, 
+            `the snippet with ID: ${snippetId} has been deleted`);
     });
 });
 

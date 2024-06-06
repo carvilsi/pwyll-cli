@@ -1,12 +1,17 @@
 /* eslint consistent-return: "off" */
 /* eslint no-param-reassign: "off" */
 
-import { errorHandler,
-    configHandler,
-    checkVersion,
-    configFileExists } from './util.js';
+import {
+    errorHandler,
+    PwyllCLIError,
+} from '../handlers/errorHandler.js';
 import { signUpPwyllCall } from './pwyllServerCalls.js';
-import { sigupQuestion } from './userQuestions.js';
+import { sigupQuestion } from '../clui/userQuestions.js';
+import {
+    configFileExists,
+    configHandler
+} from '../handlers/configHandler.js';
+import { checkVersion } from '../utils/index.js';
 
 export default async function signUpPrompt(answers) {
     try {
@@ -19,13 +24,14 @@ export default async function signUpPrompt(answers) {
         const username = answers.username.trim();
         await checkVersion({ pwyllUrl: url });
         if (secret !== answers.repeatSecret.trim()) {
-            throw new Error('the provided passwords does not match, please repeat again');
+            throw new PwyllCLIError(
+                'The provided secrets does not match, please repeat again');
         }
         const userID = await signUpPwyllCall(url, username, secret);
         await configHandler(url, username, userID, secret);
         return userID;
     } catch (err) {
-        errorHandler(err);
+        return errorHandler(err);
     }
 }
 

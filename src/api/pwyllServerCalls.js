@@ -1,6 +1,10 @@
 import axios from 'axios';
 import fs from 'node:fs';
-import { errorHandler, InvalidUserError, warningHandler } from './util.js';
+import {
+    errorHandler,
+    PwyllCLIError
+} from '../handlers/errorHandler.js';
+import { warningHandler } from '../handlers/warningHandler.js';
 
 // delete a snippet
 export async function deleteSnippetPwyllCall(snippetObj, config) {
@@ -32,7 +36,12 @@ export async function signUpPwyllCall(pwyllUrl, username, secret) {
         return userID;
     } catch (error) {
         if (typeof error.response.data.message !== 'undefined') {
-            throw new Error(error.response.data.message);
+            if ((/does not meet the security policies/)
+                .test(error.response.data.message)) {
+                throw new PwyllCLIError(error.response.data.message);
+            } else {
+                throw new Error(error.response.data.message);
+            }
         } else {
             throw error;
         }
@@ -77,7 +86,8 @@ export async function searchSnippetPwyllCall(query, config) {
         return snippets;
     } catch (err) {
         if (err.response?.data?.message === 'Invalid userID or secret') {
-            const userError = new InvalidUserError('Not valid user, please check configuration file');
+            const userError =
+                new PwyllCLIError('Not valid user, please check configuration file');
             warningHandler(userError);
             process.exit();
         } else {
@@ -95,7 +105,7 @@ export async function retrieveInfo(config) {
         return res.data;
     } catch (error) {
         if ((/ECONNREFUSED/).test(error.message) || (/timeout of/).test(error.message)) {
-            throw new Error(`No pwyll server running at ${config.pwyllUrl}`);
+            throw new PwyllCLIError(`No pwyll server running at ${config.pwyllUrl}`);
         } else {
             throw error;
         }

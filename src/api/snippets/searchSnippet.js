@@ -2,18 +2,17 @@
 
 import readline from 'node:readline';
 
-import { searchSnippetPwyllCall } from './pwyllServerCalls.js';
+import { searchSnippetPwyllCall } from '../pwyllServerCalls.js';
 import delSnippet from './deleteSnippet.js';
 import updateSnippet from './updateSnippet.js';
-import {
-    configReader,
-    cyaAndExit,
-    checkVersion,
-    errorHandler } from './util.js';
+import { configReader } from '../../handlers/configHandler.js';
+import { cyaAndExit } from '../../clui/index.js';
+import { checkVersion } from '../..//utils/index.js';
+import { errorHandler } from '../../handlers/errorHandler.js';
 import {
     searchRender,
     snippetsRender
-} from './clui.js';
+} from '../../clui/index.js';
 
 const log = console.log;
 let selectedSnippet = 0;
@@ -33,7 +32,7 @@ function callAndPrint(rl, query, config) {
         });
 }
 
-export async function search({
+export default async function search({
     searchAll = false,
     update = false,
     del = false

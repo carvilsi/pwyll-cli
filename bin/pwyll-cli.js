@@ -1,15 +1,16 @@
 #! /usr/bin/env node
 
 import { Command } from 'commander';
-import  signUpPrompt  from './../src/signUp.js';
-import  add  from './../src/addSnippet.js';
-import { search } from './../src/searchSnippet.js';
-import exportsFromPwyll from './../src/exportSnippets.js';
-import importsToPwyll from './../src/importSnippets.js';
 import fs from 'node:fs';
 import * as url from 'url';
 import path from 'node:path';
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+
+import signUpPrompt from '../src/api/signUp.js';
+import add from '../src/api/snippets/addSnippet.js';
+import search from '../src/api/snippets/searchSnippet.js';
+import exportsFromPwyll from '../src/api/snippets/exportSnippets.js';
+import importsToPwyll from '../src/api/snippets/importSnippets.js';
 
 const pckg = JSON.parse(fs.readFileSync(path.join(__dirname, './../package.json')));
 

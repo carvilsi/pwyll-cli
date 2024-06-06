@@ -1,5 +1,10 @@
 # Changelog
 
+# [v5.0.0](https://github.com/carvilsi/pwyll-cli/releases/tag/v5.0.0) (2024-06-06)
+
+- updated to handle server modifications for secret policies
+- updating formidable dependency for vulnerability CVE-2022-29622
+
 # [v4.1.3](https://github.com/carvilsi/pwyll-cli/releases/tag/v4.1.3) (2024-04-16)
 
 - improved error for invalid user
