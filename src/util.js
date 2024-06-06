@@ -46,6 +46,7 @@ export class ConfigurationFileExistsError extends Error {
         Object.setPrototypeOf(this, ConfigurationFileExistsError.prototype);
     }
 }
+
 // XXX: maybe replace these three functions with logmeplease
 export function errorHandler(error) {
     log(`[${chalk.red('ERROR')}] ${error.message}`);

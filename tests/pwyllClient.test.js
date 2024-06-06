@@ -9,7 +9,7 @@ import testGlobals from './testGlobals.js';
 import add from '../src/addSnippet.js';
 import delSnippet from '../src/deleteSnippet.js';
 import updateSnippet from '../src/updateSnippet.js';
-import { configReader } from '../src/util.js';
+import { configReader, ConfigurationFileExistsError } from '../src/util.js';
 import signUpPrompt from '../src/signUp.js';
 import { searchSnippetPwyllCall } from '../src/pwyllServerCalls.js';
 import exportsFromPwyll from '../src/exportSnippets.js';
@@ -26,12 +26,34 @@ describe('pwyll client', async() => {
         repeatSecret: testGlobals.__USER_SECRET__,
     };
 
+    it('should not signup a new user, since the user secret are different', async() => {
+        answersSignup.secret = 'foo';
+        answersSignup.repeatSecret = 'bar';
+        try {
+            await signUpPrompt(answersSignup);
+        } catch (err) {
+            equal(err.message, 'The provided secrets does not match, please repeat again');
+        }
+    });
+
+    it('should not signup a new user, since the secret does not match the policy',
+        async() => {
+            answersSignup.secret = 'weak';
+            answersSignup.repeatSecret = 'weak';
+            try {
+                await signUpPrompt(answersSignup);
+            } catch (error) {
+                expect((/does not meet the security policies/).test(error.toString())).to.be.true;
+            }
+        });
+
     it('should signup a new user', async() => {
+        answersSignup.secret = testGlobals.__USER_SECRET__;
+        answersSignup.repeatSecret = testGlobals.__USER_SECRET__;
         const response = await signUpPrompt(answersSignup);
         equal(response.length, 24);
     });
 
-    // TODO: fix all of this since is throwing an error since the config file already exists
     it('should not signup a new user, since the config file already exists', async() => {
         answersSignup.username = 'Mr. Frodo Baggins';
         expect(async() => {
@@ -39,24 +61,9 @@ describe('pwyll client', async() => {
         }).to.throw;
     });
 
-    it('should not signup a new user, since the user secret are different', async() => {
-        answersSignup.username = 'Sr. Frodo Baggins';
-        answersSignup.repeatSecret = 'ring';
-        expect(async() => {
-            await signUpPrompt(answersSignup);
-        }).to.throw;
-    });
-
     it('should read the config file', async() => {
         config = await configReader();
-
         assert.containsAllKeys(config, [ 'userID', 'username', 'secret', 'pwyllUrl' ]);
-    });
-
-    it('should not signup a user, since config file already exists', async() => {
-        expect(async() => {
-            await signUpPrompt(answersSignup);
-        }).to.throw;
     });
 
     it('should add new snippet', async() => {
@@ -160,22 +167,5 @@ describe('pwyll client', async() => {
 
         assert.isTrue(response, `the snippet with ID: ${snippetId} has been deleted`);
     });
-
-    it('should not signup a new user, since the secret does not match the policy',
-        async() => {
-            answersSignup.username = 'Cthulhu';
-            answersSignup.secret = 'weak';
-            answersSignup.repeatSecret = 'weak';
-            expect(async() => {
-                await signUpPrompt(answersSignup);
-            }).to.throw;
-            //try {
-                //await signUpPrompt(answersSignup);
-            //} catch (error) {
-                //console.dir(error);
-                //console.dir(error.message);
-                //expect(/does not meet the security policies/.test(error.toString())).to.be.true;
-            //}
-        });
 });
 
