@@ -1,6 +1,6 @@
 {
   "name": "pwyll-cli",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "the cli for pwyll to deal with snippets",
   "main": "./src/searchSnippet.js",
   "type": "module",
@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha.js tests/",
-    "test-ci-cd": "rm -f ~/.pwyll-cli/pwyll-config.json && rm -f tests/files/export-file.json; cd tests/; docker-compose up -d; cd -; sleep 20; npm test",
+    "test-ci-cd": "rm -f ~/.pwyll-cli/pwyll-config.json && rm -f tests/files/export-file.json; cd tests/; docker compose up -d; cd -; sleep 20; npm test",
     "test-local": "docker ps | grep dev-mongo > /dev/null && rm -f ~/.pwyll-cli/pwyll-config.json && rm -f tests/files/export-file.json && ./node_modules/mocha/bin/mocha.js tests/",
     "test-local-dev": "nodemon -w . -e .js -x 'npm run test-local'",
     "coverage": "./node_modules/c8/bin/c8.js node src/*.js; ./node_modules/c8/bin/c8.js npm test",
