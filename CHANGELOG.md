@@ -1,5 +1,10 @@
 # Changelog
 
+# [v5.0.1](https://github.com/carvilsi/pwyll-cli/releases/tag/v5.0.1) (2024-08-23)
+
+- axios CVE-2024-39338 fixes
+- improved error handling
+
 # [v5.0.0](https://github.com/carvilsi/pwyll-cli/releases/tag/v5.0.0) (2024-06-06)
 
 - updated to handle server modifications for secret policies

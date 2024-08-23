@@ -9,7 +9,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: 'pwy11'
 
   pwyll:
-    image: carvilsi/pwyll:5.0.0
+    image: carvilsi/pwyll:5.0.1
     restart: always
     ports:
       - '46520:46520'
