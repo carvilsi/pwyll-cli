@@ -1,5 +1,7 @@
 /* eslint consistent-return: "off" */
 
+// TODO: add a spinner as feedback when importing
+
 import fs from 'node:fs';
 import JSONStream from 'JSONStream';
 import path from 'node:path';
