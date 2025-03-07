@@ -3,7 +3,7 @@ import Chance from 'chance';
 const chance = new Chance();
 
 const testGlobals = {
-    __PYWLL_SERVER_URL__: 'http://localhost:46521',
+    __PYWLL_SERVER_URL__: 'http://localhost:46520',
     __USER_NAME__: chance.name().replace(' ', '_'),
     __USER_SECRET__: '6Nwa.TS1q$7X51k4ZnZHHmH',
     __SNIPPET_OBJECT__: {
