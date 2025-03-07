@@ -1,6 +1,6 @@
 {
   "name": "pwyll-cli",
-  "version": "5.0.1",
+  "version": "6.0.0",
   "description": "the cli for pwyll to deal with snippets",
   "main": "./src/searchSnippet.js",
   "type": "module",

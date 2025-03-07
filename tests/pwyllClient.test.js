@@ -45,7 +45,7 @@ describe('pwyll client', async() => {
         answersSignup.secret = testGlobals.__USER_SECRET__;
         answersSignup.repeatSecret = testGlobals.__USER_SECRET__;
         const response = await signUpPrompt(answersSignup);
-        equal(response.length, 24);
+        expect(response).to.be.a('number');
     });
 
     it('should not signup a new user, since the config file already exists', async() => {
@@ -65,8 +65,9 @@ describe('pwyll client', async() => {
             description: testGlobals.__SNIPPET_OBJECT__.description,
         };
         const response = await add(answers);
+        equal(response.status, 200);
         snippetId = response.data;
-        equal(snippetId.length, 24);
+        expect(snippetId).to.be.a('number');
     });
 
     it('should update a snippet', async() => {
@@ -100,8 +101,9 @@ describe('pwyll client', async() => {
             description: testGlobals.__SNIPPET_OBJECT__.description,
         };
         const response = await add(answers);
+        equal(response.status, 200);
         snippetSecondId = response.data;
-        equal(snippetSecondId.length, 24);
+        expect(snippetId).to.be.a('number');
     });
 
     it('should export all the snippets for the user', async() => {
@@ -115,13 +117,13 @@ describe('pwyll client', async() => {
             testGlobals.__SECOND_SNIPPET_OBJECT__.snippet);
         equal(snippets[i].description, 
             testGlobals.__SECOND_SNIPPET_OBJECT__.description);
-        equal(snippets[i].user.username, testGlobals.__USER_NAME__);
-        equal(snippets[i]._id, snippetId);
+        equal(snippets[i].username, testGlobals.__USER_NAME__);
+        equal(snippets[i].id, snippetId);
         i++;
         equal(snippets[i].snippet, testGlobals.__SNIPPET_OBJECT__.snippet);
         equal(snippets[i].description, testGlobals.__SNIPPET_OBJECT__.description);
-        equal(snippets[i].user.username, testGlobals.__USER_NAME__);
-        equal(snippets[i]._id, snippetSecondId);
+        equal(snippets[i].username, testGlobals.__USER_NAME__);
+        equal(snippets[i].id, snippetSecondId);
     });
 
     it('should fail when export since the export file already exists', 
