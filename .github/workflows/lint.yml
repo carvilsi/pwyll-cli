@@ -19,8 +19,9 @@ jobs:
         node-version: '18.x'
     - name: dependencies 
       run: |
-        npm install
+        npm install --global yarn
+        yarn
     - name: linter
-      run: npm run lint
+      run: yarn lint
     - name: linter tests
-      run: npm run lint-test
+      run: yarn lint-test
