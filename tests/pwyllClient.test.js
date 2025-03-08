@@ -35,10 +35,10 @@ describe('pwyll client', async() => {
 
     it('should not signup a new user, since the secret does not match the policy',
         async() => {
-        answersSignup.secret = 'weak';
-        answersSignup.repeatSecret = 'weak';
-        const res = await signUpPrompt(answersSignup);
-        expect((/does not meet the security policies/).test(res)).to.be.true;
+            answersSignup.secret = 'weak';
+            answersSignup.repeatSecret = 'weak';
+            const res = await signUpPrompt(answersSignup);
+            expect((/does not meet the security policies/).test(res)).to.be.true;
         });
 
     it('should signup a new user', async() => {
@@ -87,9 +87,9 @@ describe('pwyll client', async() => {
 
     it('should find the snippet', async() => {
         const snippets = await searchSnippetPwyllCall('nodemon', config);
-        equal(snippets[0].snippet, 
+        equal(snippets[0].snippet,
             testGlobals.__SECOND_SNIPPET_OBJECT__.snippet);
-        equal(snippets[0].description, 
+        equal(snippets[0].description,
             testGlobals.__SECOND_SNIPPET_OBJECT__.description);
         equal(snippets[0].username, testGlobals.__USER_NAME__);
         equal(snippets[0].id, snippetId);
@@ -109,13 +109,13 @@ describe('pwyll client', async() => {
     it('should export all the snippets for the user', async() => {
         await exportsFromPwyll(testGlobals.__EXPORT_FILE__);
         equal(fs.existsSync(testGlobals.__EXPORT_FILE__), true);
-        const snippets = 
+        const snippets =
             JSON.parse(fs.readFileSync(testGlobals.__EXPORT_FILE__));
         equal(snippets.length, 2);
         let i = 0;
-        equal(snippets[i].snippet, 
+        equal(snippets[i].snippet,
             testGlobals.__SECOND_SNIPPET_OBJECT__.snippet);
-        equal(snippets[i].description, 
+        equal(snippets[i].description,
             testGlobals.__SECOND_SNIPPET_OBJECT__.description);
         equal(snippets[i].username, testGlobals.__USER_NAME__);
         equal(snippets[i].id, snippetId);
@@ -126,16 +126,16 @@ describe('pwyll client', async() => {
         equal(snippets[i].id, snippetSecondId);
     });
 
-    it('should fail when export since the export file already exists', 
+    it('should fail when export since the export file already exists',
         async() => {
-        const res = await exportsFromPwyll(testGlobals.__EXPORT_FILE__);
-        equal(res, 
-            `The export file ${testGlobals.__EXPORT_FILE__} already exists`);
-    });
+            const res = await exportsFromPwyll(testGlobals.__EXPORT_FILE__);
+            equal(res,
+                `The export file ${testGlobals.__EXPORT_FILE__} already exists`);
+        });
 
     it('should import a json file with snippets for user', async() => {
         await importsToPwyll(testGlobals.__IMPORT_FILE__);
-        const snippetsImported = 
+        const snippetsImported =
             JSON.parse(fs.readFileSync(testGlobals.__IMPORT_FILE__));
         const snippets = await searchSnippetPwyllCall('exa', config);
         equal(snippets[0].snippet, snippetsImported[1].snippet);
@@ -145,17 +145,17 @@ describe('pwyll client', async() => {
 
     it('should not import because the file does not exists', async() => {
         const res = await importsToPwyll(testGlobals.__DOOMIE_IMPORT_FILE__);
-        equal(res, 'The file ' + 
-            `${testGlobals.__DOOMIE_IMPORT_FILE__}` + 
+        equal(res, 'The file ' +
+            `${testGlobals.__DOOMIE_IMPORT_FILE__}` +
             ' to import does not exists');
     });
 
     it('should not import because the file is not a json', async() => {
         const res = await importsToPwyll(
             testGlobals.__DOOMIE_IMPORT_FILE_NO_JSON_EXTENSION__);
-        equal(res, 
-            'The provided file ' + 
-            `${testGlobals.__DOOMIE_IMPORT_FILE_NO_JSON_EXTENSION__}` + 
+        equal(res,
+            'The provided file ' +
+            `${testGlobals.__DOOMIE_IMPORT_FILE_NO_JSON_EXTENSION__}` +
             ' has not json extension');
     });
 
@@ -168,7 +168,7 @@ describe('pwyll client', async() => {
         const answers = { value: true };
         const response = await delSnippet(snippetObj, config, answers);
 
-        assert.isTrue(response, 
+        assert.isTrue(response,
             `the snippet with ID: ${snippetId} has been deleted`);
     });
 });
