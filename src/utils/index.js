@@ -12,7 +12,6 @@ const PACKAGE_JSON = './../../package.json';
 
 export async function checkVersion(config) {
     const pwyllInfo = await retrieveInfo(config);
-    console.dir(pwyllInfo);
     const pckgFile = await fs.readFile(path.join(__dirname, PACKAGE_JSON));
     const pckg = JSON.parse(pckgFile);
     const major = semver.major(semver.coerce(pckg.version));
