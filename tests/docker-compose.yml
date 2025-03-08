@@ -11,12 +11,12 @@ services:
       - POSTGRES_PASSWORD=postgres
 
   pwyll:
-    image: carvilsi/pwyll:6.0.0-alpha.0
+    image: carvilsi/pwyll:6.0.0-alpha.1
     restart: always
     ports:
       - '46520:46520'
     environment:
-      NODE_ENV: 'tests'
+      NODE_ENV: 'test'
     depends_on:
       - pg-test
   

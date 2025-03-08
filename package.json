@@ -20,7 +20,8 @@
     "lint": "./node_modules/eslint/bin/eslint.js src/ --ext .js",
     "lint-test": "./node_modules/eslint/bin/eslint.js tests/ --ext .js",
     "lint-fix": "./node_modules/eslint/bin/eslint.js src/ --ext .js --fix",
-    "lint-test-fix": "./node_modules/eslint/bin/eslint.js tests/ --ext .js --fix"
+    "lint-test-fix": "./node_modules/eslint/bin/eslint.js tests/ --ext .js --fix",
+    "sec-dep-audit": "yarn audit --groups dependencies"
   },
   "repository": {
     "type": "git",
