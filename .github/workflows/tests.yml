@@ -19,8 +19,9 @@ jobs:
         node-version: '18.x'
     - name: dependencies 
       run: |
-        npm install
+        npm install --global yarn
+        yarn
     - name: tests  
-      run: npm run test-ci-cd
+      run: yarn test-ci-cd
     - name: coverage
-      run: npm run coverage-ci-cd
+      run: yarn coverage-ci-cd

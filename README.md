@@ -97,7 +97,7 @@ Example of basic configuration file:
 {
   "pwyllUrl": "http://localhost:46520",
   "username": "Frodo Baggins",
-  "userID": "00e5f795fff0ce4a10c06000",
+  "userID": "101",
   "secret": "user test super secret"
 }
 ```
@@ -108,7 +108,7 @@ By default the cli has colors, you can disable them via config file, like:
 {
   "pwyllUrl": "http://localhost:46520",
   "username": "Frodo Baggins",
-  "userID": "00e5f795fff0ce4a10c06000",
+  "userID": "101",
   "secret": "user test super secret", 
   "colors": { 
     "enabled": false 
@@ -122,7 +122,7 @@ Also it's possible to customize the colors, this is an example:
 {
   "pwyllUrl": "http://localhost:46520",
   "username": "Frodo Baggins",
-  "userID": "00e5f795fff0ce4a10c06000",
+  "userID": "101",
   "secret": "user test super secret", 
   "colors": { 
     "enabled": true, 

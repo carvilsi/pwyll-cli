@@ -1,4 +1,4 @@
-name: Linter 
+name: dependencies vulns audit
 
 on:
   push:
@@ -21,7 +21,5 @@ jobs:
       run: |
         npm install --global yarn
         yarn
-    - name: linter
-      run: yarn lint
-    - name: linter tests
-      run: yarn lint-test
+    - name: dependencies vulns audit 
+      run: yarn sec-dep-audit
