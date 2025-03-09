@@ -1,5 +1,12 @@
 # Changelog
 
+# [v6.0.0](https://github.com/carvilsi/pwyll-cli/releases/tag/v6.0.0) (2025-03-09)
+
+- updated to run against server migrated to postgresql database
+- ci added dependency security audit step
+- adding coerce to semver to support alpha and beta versions
+- migrating to yarn
+
 # [v5.0.1](https://github.com/carvilsi/pwyll-cli/releases/tag/v5.0.1) (2024-08-23)
 
 - axios CVE-2024-39338 fixes
