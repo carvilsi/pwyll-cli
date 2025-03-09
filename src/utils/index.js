@@ -14,8 +14,8 @@ export async function checkVersion(config) {
     const pwyllInfo = await retrieveInfo(config);
     const pckgFile = await fs.readFile(path.join(__dirname, PACKAGE_JSON));
     const pckg = JSON.parse(pckgFile);
-    const major = semver.major(pckg.version);
-    const isValidVersion = semver.satisfies(pwyllInfo.version, `^${major}.x`);
+    const major = semver.major(semver.coerce(pckg.version));
+    const isValidVersion = semver.satisfies(semver.coerce(pwyllInfo.version), `^${major}.x`);
     if (!isValidVersion) {
         throw new PwyllCLIError(`${pckg.name}@${pckg.version} ` +
             'not compatible with server version for ' +
