@@ -9,8 +9,8 @@ import { warningHandler } from '../handlers/warningHandler.js';
 // delete a snippet
 export async function deleteSnippetPwyllCall(snippetObj, config) {
     const response =
-    await axios.delete(
-        `${config.pwyllUrl}/snippet/${snippetObj.id}/${config.userID}/${config.secret}`);
+      await axios.delete(
+          `${config.pwyllUrl}/snippet/${snippetObj.id}/${config.userID}/${encodeURIComponent(config.secret)}`);
     return response;
 }
 

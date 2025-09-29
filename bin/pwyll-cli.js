@@ -94,3 +94,4 @@ program
 
 program.parse();
 
+// FIXME: on ssh sessions copy to clipboard fails

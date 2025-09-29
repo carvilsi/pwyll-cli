@@ -1,5 +1,11 @@
 # Changelog
 
+# [v6.0.1](https://github.com/carvilsi/pwyll-cli/releases/tag/v6.0.1) (2025-09-29)
+
+- fixes issue when deleting
+- updates security vulnerabilities for axios
+- updates README
+
 # [v6.0.0](https://github.com/carvilsi/pwyll-cli/releases/tag/v6.0.0) (2025-03-09)
 
 - updated to run against server migrated to postgresql database
