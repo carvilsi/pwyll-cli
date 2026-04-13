@@ -1,8 +1,12 @@
 # Changelog
 
+# [v6.0.3](https://github.com/carvilsi/pwyll-cli/releases/tag/v6.0.3) (2026-04-13)
+
+- updates security vulnerabilities for axios
+
 # [v6.0.2](https://github.com/carvilsi/pwyll-cli/releases/tag/v6.0.2) (2026-02-22)
 
-- upgrading axios for CVE-2026-25639- ready for release- fixes issue when deleting, updates security vulnerabilities for axios
+- upgrading axios for CVE-2026-25639
 
 # [v6.0.1](https://github.com/carvilsi/pwyll-cli/releases/tag/v6.0.1) (2025-09-29)
 
